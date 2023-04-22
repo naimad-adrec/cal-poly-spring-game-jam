@@ -5,7 +5,7 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 public class PlayerMovingState : PlayerBaseState
 {
     // Movement Variables
-    private float moveSpeed = 300f;
+    private float moveSpeed = 200f;
     private Vector3 moveDir;
 
     public override void EnterState(PlayerStateMachine player)

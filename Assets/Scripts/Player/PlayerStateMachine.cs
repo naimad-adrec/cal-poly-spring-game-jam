@@ -26,6 +26,7 @@ public class PlayerStateMachine : MonoBehaviour
     // Input Variables
     private float _dirX;
     private bool _isInteracting;
+    private bool inRange = false;
 
     // Input Getters and Setters
     public float DirX { get { return _dirX; } set { _dirX = value; } }
@@ -86,6 +87,36 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void OnInteract(InputAction.CallbackContext context)
     {
-        _isInteracting = true;
+        if (inRange == true)
+        {
+            _isInteracting = true;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Interactable"))
+        {
+            Debug.Log("inrange");
+            inRange = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Interactable"))
+        {
+            inRange = false;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+
     }
 }

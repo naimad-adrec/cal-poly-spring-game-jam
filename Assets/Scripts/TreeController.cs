@@ -21,8 +21,9 @@ public class TreeController : MonoBehaviour
         else
         {
             Debug.Log("Taken Damage");
-            treeHealth--;
             PlayerStateMachine.Instance.IsInteracting = false;
+            treeHealth--;
+
         }
     }
 
