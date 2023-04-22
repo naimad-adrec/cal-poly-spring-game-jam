@@ -548,9 +548,10 @@ GameObject:
   - component: {fileID: 97342327}
   - component: {fileID: 97342326}
   - component: {fileID: 97342329}
+  - component: {fileID: 97342330}
   m_Layer: 0
   m_Name: Main Fire
-  m_TagString: Untagged
+  m_TagString: Fire
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -657,6 +658,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fireHealth: 100
+--- !u!58 &97342330
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97342325}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.16515279}
+  serializedVersion: 2
+  m_Radius: 0.08484721
 --- !u!1 &108141098
 GameObject:
   m_ObjectHideFlags: 0
@@ -4652,3 +4669,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _targetPosition: {fileID: 656702985}
+  waterProjectile: {fileID: 0}
