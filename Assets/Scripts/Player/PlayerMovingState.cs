@@ -5,13 +5,12 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 public class PlayerMovingState : PlayerBaseState
 {
     // Movement Variables
-    [SerializeField] private float moveSpeed = 200f;
+    private float moveSpeed = 200f;
     private Vector3 moveDir;
 
     public override void EnterState(PlayerStateMachine player)
     {
-        Debug.Log("I am Moving");
-        ChangeCurrentAnimation(player);
+
     }
 
     public override void UpdateState(PlayerStateMachine player)
@@ -19,7 +18,6 @@ public class PlayerMovingState : PlayerBaseState
         if (player.DirX != 0f && player.IsInteracting == false)
         {
             ApplyPlayerMovement(player);
-            ChangeCurrentAnimation(player);
         }
         else if (player.DirX == 0f && player.IsInteracting == false)
         {

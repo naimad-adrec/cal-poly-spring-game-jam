@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Interactable
   layers:
   - Default
   - TransparentFX
@@ -40,4 +41,22 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 3839706809
+    locked: 0
+  - name: Back Trees
+    uniqueID: 3842851969
+    locked: 0
+  - name: Fire
+    uniqueID: 2113089807
+    locked: 0
+  - name: Background Front
+    uniqueID: 1909712579
+    locked: 0
+  - name: Player
+    uniqueID: 4075184667
+    locked: 0
+  - name: Front Trees
+    uniqueID: 2828269375
     locked: 0

@@ -5,12 +5,12 @@ using UnityEngine;
 public class PlayerIdleState : PlayerBaseState
 {
     // Movement Variables
-    [SerializeField] private float moveSpeed = 200f;
+    private float moveSpeed = 200f;
     private Vector3 moveDir;
 
     public override void EnterState(PlayerStateMachine player)
     {
-        Debug.Log("I am Idle");
+
     }
 
     public override void UpdateState(PlayerStateMachine player)
