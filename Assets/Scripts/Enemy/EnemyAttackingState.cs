@@ -7,16 +7,24 @@ public class EnemyAttackingState : EnemyBaseState
 
     public override void EnterState(EnemyStateMachine enemy)
     {
+        Debug.Log("Attacking");
 
+        // Send projectile
+
+        // Play attack animation
+
+        // Set can attack to false
     }
 
     public override void UpdateState(EnemyStateMachine enemy)
     {
+        if (enemy.AtTarget == true && enemy.CanAttack == true)
+        {
 
-    }
-
-    public override void OnCollisionEnter2D(EnemyStateMachine enemy)
-    {
-
+        }
+        else
+        {
+            enemy.SwitchState(enemy.IdleState);
+        }
     }
 }

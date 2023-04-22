@@ -10,16 +10,36 @@ public class EnemyStateMachine : MonoBehaviour
     public EnemyIdleState IdleState = new EnemyIdleState();
     public EnemyAttackingState AttackingState = new EnemyAttackingState();
 
+    // Position Variables
+    private bool _atTarget = false;
+    [SerializeField] private GameObject _targetPosition;
+
+    //Position Getters and Setters
+    public bool AtTarget { get { return _atTarget; } set { _atTarget = value; } }
+    public GameObject TargetPosition { get { return _targetPosition; } private set { } }
+
+    // Attack Variables
+    private bool _canAttack = true;
+
+    // Attack Getters and Setters
+    public bool CanAttack { get { return _canAttack; } set { _canAttack = value; } }
+
     private void Start()
     {
         // Starting state for the state machine
-        CurrentState = IdleState;
-        // Reference to the apples context (This exact monobehavior script)
+        CurrentState = MovingState;
+        // Reference to the enemys context (This exact monobehavior script)
         CurrentState.EnterState(this);
     }
 
     private void Update()
     {
         CurrentState.UpdateState(this);
+    }
+
+    public void SwitchState(EnemyBaseState state)
+    {
+        CurrentState = state;
+        state.EnterState(this);
     }
 }
