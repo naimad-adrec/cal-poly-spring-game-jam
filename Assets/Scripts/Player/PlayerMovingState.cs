@@ -10,7 +10,7 @@ public class PlayerMovingState : PlayerBaseState
 
     public override void EnterState(PlayerStateMachine player)
     {
-        Debug.Log("I am Moving");
+
     }
 
     public override void UpdateState(PlayerStateMachine player)

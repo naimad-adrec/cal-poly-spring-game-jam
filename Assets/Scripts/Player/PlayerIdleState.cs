@@ -10,7 +10,6 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void EnterState(PlayerStateMachine player)
     {
-        Debug.Log("I am Idle");
     }
 
     public override void UpdateState(PlayerStateMachine player)
