@@ -4,14 +4,22 @@ using UnityEngine;
 
 public class FireController : MonoBehaviour
 {
+    // Singleton
+    public static FireController Instance;
+
     // Game Component Variables
     private Animator anim;
 
     // Health Variables
-    [SerializeField] private int fireHealth;
+    [SerializeField] private int _fireHealth;
+
+    // Health Getters and Setters
+    public int FireHealth { get { return _fireHealth; } set { _fireHealth = value; } }
 
     private void Awake()
     {
+        Instance = this;
+
         anim = GetComponent<Animator>();
     }
 
@@ -21,7 +29,7 @@ public class FireController : MonoBehaviour
         {
             PlayerStateMachine.Instance.IsInteracting = false;
             PlayerStateMachine.Instance.WoodCount--;
-            fireHealth += 20;
+            _fireHealth += 20;
 
             // Play flame noise
         }
