@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerIdleState : PlayerBaseState
 {
     // Movement Variables
-    [SerializeField] private float moveSpeed = 200f;
+    private float moveSpeed = 200f;
     private Vector3 moveDir;
 
     public override void EnterState(PlayerStateMachine player)
