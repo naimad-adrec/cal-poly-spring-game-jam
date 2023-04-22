@@ -31,6 +31,8 @@ public class EnemyLogic : MonoBehaviour
     public bool CanAttack { get { return _canAttack; } set { _canAttack = value; } }
     public GameObject WaterProjectile { get { return _waterProjectile; } set { _waterProjectile = value; } }
 
+    // Health Variables
+
     private void Awake()
     {
         _anim = GetComponent<Animator>();
@@ -67,7 +69,7 @@ public class EnemyLogic : MonoBehaviour
 
     public void FireProjectile()
     {
-        Instantiate(_waterProjectile, new Vector3(transform.position.x + 1, transform.position.y, transform.position.z), transform.rotation);
+        Instantiate(_waterProjectile, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
     }
 
     private void MoveToTarget()
@@ -77,6 +79,7 @@ public class EnemyLogic : MonoBehaviour
         if (transform.position == _targetPosition.transform.position)
         {
             _atTarget = true;
+            _anim.SetBool("targetReached", true);
         }
     }
 

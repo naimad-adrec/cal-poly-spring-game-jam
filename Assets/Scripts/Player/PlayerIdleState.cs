@@ -10,7 +10,7 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void EnterState(PlayerStateMachine player)
     {
-
+        player.CanDodge = false;
     }
 
     public override void UpdateState(PlayerStateMachine player)

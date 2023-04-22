@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Interactable
   - Fire
+  - Enemy
   layers:
   - Default
   - TransparentFX
