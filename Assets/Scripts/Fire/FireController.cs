@@ -15,14 +15,21 @@ public class FireController : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    private void TakeResources()
+    public void TakeResources()
     {
         if (PlayerStateMachine.Instance.WoodCount >= 1)
         {
+            PlayerStateMachine.Instance.IsInteracting = false;
             PlayerStateMachine.Instance.WoodCount--;
             fireHealth += 20;
 
             // Play flame noise
+        }
+        else
+        {
+            PlayerStateMachine.Instance.IsInteracting = false;
+
+            // Show that there is no wood
         }
     }
 }

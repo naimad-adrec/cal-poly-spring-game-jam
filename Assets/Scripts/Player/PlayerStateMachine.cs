@@ -37,7 +37,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     // Resource Getters and Setters
     public int WoodCount { get { return _woodCount; } set { _woodCount = value; } }
-    public int CoalCount { get { return _woodCount; } set { _woodCount = value; } }
+    public int CoalCount { get { return _coalCount; } set { _coalCount = value; } }
 
     private void Awake()
     {
