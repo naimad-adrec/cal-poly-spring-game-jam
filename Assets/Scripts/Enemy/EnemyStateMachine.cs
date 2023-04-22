@@ -10,6 +10,12 @@ public class EnemyStateMachine : MonoBehaviour
     public EnemyIdleState IdleState = new EnemyIdleState();
     public EnemyAttackingState AttackingState = new EnemyAttackingState();
 
+    // Game Object Variables
+    private Animator _anim;
+
+    // Game Object Getters and Setters
+    public Animator Anim { get { return _anim; } set { _anim = value; } }
+
     // Position Variables
     private bool _atTarget = false;
     [SerializeField] private GameObject _targetPosition;
@@ -23,6 +29,11 @@ public class EnemyStateMachine : MonoBehaviour
 
     // Attack Getters and Setters
     public bool CanAttack { get { return _canAttack; } set { _canAttack = value; } }
+
+    private void Awake()
+    {
+        _anim = GetComponent<Animator>();
+    }
 
     private void Start()
     {

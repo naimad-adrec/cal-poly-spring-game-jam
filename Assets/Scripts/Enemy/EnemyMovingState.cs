@@ -9,7 +9,6 @@ public class EnemyMovingState : EnemyBaseState
 
     public override void EnterState(EnemyStateMachine enemy)
     {
-        Debug.Log("Moving");
         MoveToTarget(enemy);
     }
 

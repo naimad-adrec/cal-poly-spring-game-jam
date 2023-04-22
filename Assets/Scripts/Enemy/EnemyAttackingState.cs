@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class EnemyAttackingState : EnemyBaseState
 {
-
     public override void EnterState(EnemyStateMachine enemy)
     {
         Debug.Log("Attacking");
 
+        enemy.Anim.SetBool("canAttack", true);
+
         // Send projectile
 
-        // Play attack animation
-
         // Set can attack to false
+        enemy.StartCoroutine(WaitForAttack(enemy));
     }
 
     public override void UpdateState(EnemyStateMachine enemy)
@@ -26,5 +26,12 @@ public class EnemyAttackingState : EnemyBaseState
         {
             enemy.SwitchState(enemy.IdleState);
         }
+    }
+
+    private IEnumerator WaitForAttack(EnemyStateMachine enemy)
+    {
+        yield return new WaitForSeconds(.4f);
+        enemy.Anim.SetBool("canAttack", false);
+        enemy.CanAttack = false;
     }
 }
