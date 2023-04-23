@@ -16,24 +16,21 @@ public class TreeController : MonoBehaviour
         {
             Debug.Log("Dead");
             PlayerStateMachine.Instance.IsInteracting = false;
-            StartCoroutine(DropWood());
+            DropWood();
         }
         else
         {
             Debug.Log("Taken Damage");
             PlayerStateMachine.Instance.IsInteracting = false;
             treeHealth--;
-
         }
     }
 
-    private IEnumerator DropWood()
+    private void DropWood()
     {
         Instantiate(wood, transform.position, transform.rotation);
         Instantiate(wood, transform.position, transform.rotation);
         Instantiate(wood, transform.position, transform.rotation);
-
-        yield return new WaitForSeconds(1);
 
         Destroy(gameObject);
     }

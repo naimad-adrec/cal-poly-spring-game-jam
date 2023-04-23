@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
-public class FireProjectile : MonoBehaviour
+public class LeftFireProjectile : MonoBehaviour
 {
-    private int fireballDamage;
+    private int fireballDamage = 10;
 
     private float Rotation { get; set; }
 
@@ -19,18 +18,18 @@ public class FireProjectile : MonoBehaviour
         MoveToTarget();
     }
 
-    private void MoveToTarget()
-    {
-        transform.position = Vector2.MoveTowards(transform.position, new Vector3(22, transform.position.y, transform.position.z), 10 * Time.deltaTime);
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy Left"))
         {
             ApplyDamage(collision.gameObject);
             Explode();
         }
+    }
+
+    private void MoveToTarget()
+    {
+        transform.position = Vector2.MoveTowards(transform.position, new Vector3(-24, transform.position.y, transform.position.z), 10 * Time.deltaTime);
     }
 
     public void Explode()
