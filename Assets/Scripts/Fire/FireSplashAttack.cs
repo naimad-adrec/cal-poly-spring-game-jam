@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FireSplashAttack : MonoBehaviour
 {
-
+    private int splashDamage = 25;
     private HashSet<GameObject> EnemiesInHurtBox { get; set; }
 
     // Start is called before the first frame update
@@ -13,12 +13,6 @@ public class FireSplashAttack : MonoBehaviour
         EnemiesInHurtBox = new();
         GetComponent<SpriteRenderer>().sortingLayerName = "Fire";
         StartCoroutine(HitEnemy());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -48,9 +42,12 @@ public class FireSplashAttack : MonoBehaviour
 
         foreach (GameObject enemy in targeted)
         {
-            Destroy(enemy);
+            ApplyDamage(enemy);
         }
-
     }
 
+    private void ApplyDamage(GameObject enemy)
+    {
+        enemy.GetComponent<EnemyLogic>().TakeDamage(splashDamage);
+    }
 }

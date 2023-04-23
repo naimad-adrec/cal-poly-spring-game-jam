@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FireProjectile : MonoBehaviour
 {
-
+    private int fireballDamage = 10;
     private GameObject Target { get; set; }
 
     private float Rotation { get; set; }
@@ -45,7 +45,7 @@ public class FireProjectile : MonoBehaviour
     {
         if (collision.gameObject == Target)
         {
-            Destroy(collision.gameObject);
+            ApplyDamage(collision.gameObject);
             Explode();
         }
     }
@@ -70,5 +70,10 @@ public class FireProjectile : MonoBehaviour
     {
         transform.rotation = Quaternion.identity;
         Destroy(gameObject);
+    }
+
+    private void ApplyDamage(GameObject enemy)
+    {
+        enemy.GetComponent<EnemyLogic>().TakeDamage(fireballDamage);
     }
 }

@@ -4,20 +4,15 @@ using UnityEngine;
 
 public class FireHandAttack : MonoBehaviour
 {
+    private int handDamage = 50;
+
     private HashSet<GameObject> EnemiesInHurtBox { get; set; }
 
-    // Start is called before the first frame update
     void Start()
     {
         EnemiesInHurtBox = new();
         GetComponent<SpriteRenderer>().sortingLayerName = "Fire";
         StartCoroutine(HitEnemy());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -47,8 +42,12 @@ public class FireHandAttack : MonoBehaviour
 
         foreach (GameObject enemy in targeted)
         {
-            Destroy(enemy);
+            ApplyDamage(enemy);
         }
+    }
 
+    private void ApplyDamage(GameObject enemy)
+    {
+        enemy.GetComponent<EnemyLogic>().TakeDamage(handDamage);
     }
 }

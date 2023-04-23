@@ -8,11 +8,9 @@ public class SpawnPoint : MonoBehaviour
     [SerializeField] private GameObject enemy;
     private float _roundMax;
     private int spawnedEnemies = 0;
-    private int _liveEnemies = 0;
 
     // Enemy Getters and Setters
     public float RoundMax {  get { return _roundMax; } set { _roundMax = value; } }
-    public int LiveEnemies { get { return _liveEnemies; } private set {  } }
 
     // Timer Variables
     [SerializeField] private float _spawnTime;
@@ -45,7 +43,7 @@ public class SpawnPoint : MonoBehaviour
         {
             Instantiate(enemy, transform.position, transform.rotation);
             spawnedEnemies++;
-            _liveEnemies++;
+            RoundController.Instance.LiveEnemies++;
             currentSpawnTime = _spawnTime;
         }
     }

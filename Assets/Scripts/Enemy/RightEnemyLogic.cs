@@ -27,6 +27,10 @@ public class RightEnemyLogic : MonoBehaviour
     public GameObject WaterProjectile { get { return _waterProjectile; } set { _waterProjectile = value; } }
 
     // Health Variables
+    private int _health = 100;
+
+    // Health Getters and Setters
+    public int Health { get { return _health; } set { _health = value; } }
 
     private void Awake()
     {
@@ -86,6 +90,23 @@ public class RightEnemyLogic : MonoBehaviour
             _atTarget = false;
             _anim.SetBool("targetReached", false);
         }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        _health -= damage;
+        if (_health <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        // Play death Animation
+
+        // Destroy Self
+        Destroy(gameObject);
     }
 
     private IEnumerator Attack()
