@@ -27,7 +27,6 @@ public class WallCollider : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Projectile"))
         {
-            Debug.Log(CurrentHealth);
             if (_currentHealth == 10)
             {
                 transform.GetComponentInParent<WallBehavior>().IsBuilt = false;

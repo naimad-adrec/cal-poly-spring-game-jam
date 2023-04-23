@@ -24,7 +24,6 @@ public class WallBehavior : MonoBehaviour
         {
             transform.GetChild(0).gameObject.SetActive(false);
         }
-        // Check if build progress is met
     }
 
     public void TakeResources()

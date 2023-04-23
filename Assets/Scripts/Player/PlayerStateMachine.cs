@@ -134,7 +134,6 @@ public class PlayerStateMachine : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Interactable"))
         {
-            Debug.Log("inrange");
             inRange = true;
         }
     }
