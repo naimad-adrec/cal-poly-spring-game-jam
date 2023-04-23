@@ -13,14 +13,12 @@ public class FireAttacks : MonoBehaviour
     [SerializeField] private const double FIREBALL_ATTACK_COOLDOWN = 1.0;
 
     // Splash Variables
-    public bool SplashAttackEnabled { get; set; } = true;
     private double LastSplashAttackTime { get; set; }
     [SerializeField] private GameObject splashAttackPrefab;
     [SerializeField] private Collider2D splashAttackEnemyHitZone;
     private bool SplashAttackEnemyInRange { get; set; }
 
     // Hand Variables
-    public bool HandAttackEnabled { get; set; } = true;
     private double LastHandAttackTimeLeft { get; set; }
     private double LastHandAttackTimeRight { get; set; }
     [SerializeField] private GameObject handAttackPrefab;
@@ -54,13 +52,13 @@ public class FireAttacks : MonoBehaviour
             HandAttackEnemyInRangeRight = handAttackEnemyHitZoneRight.IsTouchingLayers(enemyLayer.value);
             EnemiesExist = GameObject.FindGameObjectWithTag("Enemy") != null;
 
-            if (SplashAttackEnabled && SplashAttackEnemyInRange &&
+            if (FireController.Instance.CanUseSplashAttack() && SplashAttackEnemyInRange &&
                 Time.timeAsDouble >= LastSplashAttackTime + SPLASH_ATTACK_COOLDOWN)
             {
                 PerformSplashAttack();
             }
 
-            if (HandAttackEnabled)
+            if (FireController.Instance.CanUseHandAttack())
             {
                 if (HandAttackEnemyInRangeLeft &&
                     Time.timeAsDouble >= LastHandAttackTimeLeft + HAND_ATTACK_COOLDOWN)

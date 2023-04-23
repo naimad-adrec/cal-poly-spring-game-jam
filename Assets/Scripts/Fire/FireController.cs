@@ -15,7 +15,8 @@ public class FireController : MonoBehaviour
     private Animator anim;
 
     // Health Variables
-    [SerializeField] private int _fireHealth;
+    [SerializeField] private int _maxFireHealth;
+    private int _fireHealth;
     private bool _isBurning = true;
 
     // Health Getters and Setters
@@ -25,11 +26,18 @@ public class FireController : MonoBehaviour
     // Projectile Variables
     [SerializeField] private int waterProjectileDamage = 5;
 
+    // Upgrade Variables
+    private Upgrades upgrades;
+
     private void Awake()
     {
         Instance = this;
 
         anim = GetComponent<Animator>();
+
+        _fireHealth = _maxFireHealth;
+
+        upgrades = new Upgrades();
     }
 
     private void Update()
@@ -81,5 +89,20 @@ public class FireController : MonoBehaviour
                 _fireHealth -= waterProjectileDamage;
             }
         }
+    }
+
+    private void SetMaxHealth(int healthIncrease)
+    {
+        _maxFireHealth = _maxFireHealth + healthIncrease;
+    }
+
+    public bool CanUseHandAttack()
+    {
+        return upgrades.IsUpgradeUnlocked(Upgrades.UpgradeType.handAttack);
+    }
+
+    public bool CanUseSplashAttack()
+    {
+        return upgrades.IsUpgradeUnlocked(Upgrades.UpgradeType.splashAttack);
     }
 }
