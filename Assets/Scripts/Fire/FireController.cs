@@ -97,6 +97,11 @@ public class FireController : MonoBehaviour
         FireAttacks.Instance.FireballAttack = FireAttacks.Instance.FireballAttack + damageIncrease;
     }
 
+    public void IncreaseRapidDamage(int damageIncrease)
+    {
+        FireAttacks.Instance.RapidFireAttack = FireAttacks.Instance.RapidFireAttack + damageIncrease;
+    }
+
     public void SetMaxHealth(int healthIncrease)
     {
         _maxFireHealth = _maxFireHealth + healthIncrease;
