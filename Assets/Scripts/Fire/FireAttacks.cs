@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class FireAttacks : MonoBehaviour
 {
+    // Attack Cooldown Variables
+    [SerializeField] private const double SPLASH_ATTACK_COOLDOWN = 1.5;
+    [SerializeField] private const double HAND_ATTACK_COOLDOWN = 3.0;
+    [SerializeField] private const double FIREBALL_ATTACK_COOLDOWN = 1.0;
 
-    private const double SPLASH_ATTACK_COOLDOWN = 1.5;
-    private const double HAND_ATTACK_COOLDOWN = 3.0;
-    private const double FIREBALL_ATTACK_COOLDOWN = 1.0;
-
+    // Splash Variables
     public bool SplashAttackEnabled { get; set; } = true;
     private double LastSplashAttackTime { get; set; }
     [SerializeField] private GameObject splashAttackPrefab;
     [SerializeField] private Collider2D splashAttackEnemyHitZone;
     private bool SplashAttackEnemyInRange { get; set; }
 
+    // Hand Variables
     public bool HandAttackEnabled { get; set; } = true;
     private double LastHandAttackTimeLeft { get; set; }
     private double LastHandAttackTimeRight { get; set; }
@@ -25,6 +27,7 @@ public class FireAttacks : MonoBehaviour
     private bool HandAttackEnemyInRangeLeft { get; set; }
     private bool HandAttackEnemyInRangeRight { get; set; }
 
+    // Fireball Variables
     public bool FireballAttackEnabled { get; set; } = true;
     private double LastFireballAttackTime { get; set; }
     [SerializeField] private GameObject fireballAttackPrefab;
@@ -32,17 +35,14 @@ public class FireAttacks : MonoBehaviour
 
     [SerializeField] private LayerMask enemyLayer;
 
-
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         LastSplashAttackTime = float.MinValue;
         LastHandAttackTimeLeft = float.MinValue;
         LastHandAttackTimeRight = float.MinValue;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         SplashAttackEnemyInRange = splashAttackEnemyHitZone.IsTouchingLayers(enemyLayer.value);
         HandAttackEnemyInRangeLeft = handAttackEnemyHitZoneLeft.IsTouchingLayers(enemyLayer.value);

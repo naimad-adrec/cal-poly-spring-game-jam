@@ -10,7 +10,7 @@ public class FireHandAttack : MonoBehaviour
     void Start()
     {
         EnemiesInHurtBox = new();
-        GetComponent<SpriteRenderer>().sortingLayerName = "Player";
+        GetComponent<SpriteRenderer>().sortingLayerName = "Fire";
         StartCoroutine(HitEnemy());
     }
 

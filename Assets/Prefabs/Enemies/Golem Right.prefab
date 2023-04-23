@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 8718055156909734502}
   - component: {fileID: 3832333729215541116}
   - component: {fileID: 4667426143600692205}
+  - component: {fileID: -3213862499463692098}
   - component: {fileID: 8370631690153082074}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Golem Right
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -123,6 +124,27 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.06}
   m_Size: {x: 0.24, y: 0.39}
   m_Direction: 0
+--- !u!50 &-3213862499463692098
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565403679502443387}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 6
 --- !u!114 &8370631690153082074
 MonoBehaviour:
   m_ObjectHideFlags: 0
