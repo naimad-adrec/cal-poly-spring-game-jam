@@ -48,6 +48,7 @@ public class RightEnemyLogic : MonoBehaviour
         }
         else
         {
+            CheckTargetChange();
             if (currentCooldown > 0f)
             {
                 Debug.Log(currentCooldown);
@@ -75,6 +76,15 @@ public class RightEnemyLogic : MonoBehaviour
         {
             _atTarget = true;
             _anim.SetBool("targetReached", true);
+        }
+    }
+
+    private void CheckTargetChange()
+    {
+        if (transform.position != LeftTargetBehavior.Instance.transform.position)
+        {
+            _atTarget = false;
+            _anim.SetBool("targetReached", false);
         }
     }
 
