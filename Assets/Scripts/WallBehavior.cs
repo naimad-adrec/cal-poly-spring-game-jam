@@ -45,6 +45,10 @@ public class WallBehavior : MonoBehaviour
             }
 
             // Play hammer noise
+            PlayerAudioController playerAudio =
+                PlayerStateMachine.Instance.gameObject.transform.GetChild(0)
+                .GetComponent<PlayerAudioController>();
+            playerAudio.PlayBuildSound();
         }
         else
         {

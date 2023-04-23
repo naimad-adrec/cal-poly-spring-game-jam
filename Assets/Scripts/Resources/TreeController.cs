@@ -12,10 +12,14 @@ public class TreeController : MonoBehaviour
 
     public void TakeDamage()
     {
+        PlayerStateMachine.Instance.gameObject.transform.GetChild(0)
+            .GetComponent<PlayerAudioController>().PlayWoodHitSound();
         if (treeHealth == 1)
         {
             Debug.Log("Dead");
             PlayerStateMachine.Instance.IsInteracting = false;
+            PlayerStateMachine.Instance.gameObject.transform.GetChild(0)
+                .GetComponent<PlayerAudioController>().PlayTreeBreakSound();
             DropWood();
         }
         else

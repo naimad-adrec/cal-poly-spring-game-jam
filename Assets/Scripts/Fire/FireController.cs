@@ -68,6 +68,10 @@ public class FireController : MonoBehaviour
             _fireHealth += woodValue;
 
             // Play flame noise
+            PlayerAudioController audioController = PlayerStateMachine.Instance
+                .gameObject.transform.GetChild(0).GetComponent<PlayerAudioController>();
+            audioController.PlayTreeBreakSound();
+            audioController.PlayFlameSound();
         }
         else
         {

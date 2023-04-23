@@ -66,6 +66,15 @@ public class FireAttacks : MonoBehaviour
     [SerializeField] private CameraController playerCamera;
     public bool IsPerformingFireBurst { get; private set; }
 
+    // Sounds
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip fireBurstSound;
+    [SerializeField] private AudioClip handSound;
+    [SerializeField] private AudioClip splashSound;
+    [SerializeField] private AudioClip rapidFireSound;
+    [SerializeField] private AudioClip fireballSound;
+    [SerializeField] private AudioClip flamethrowerSound;
+
     [SerializeField] private LayerMask enemyLayer;
 
     private SpriteRenderer Sprite { get; set; }
@@ -143,6 +152,7 @@ public class FireAttacks : MonoBehaviour
 
     public void PerformSplashAttack()
     {
+        audioSource.PlayOneShot(splashSound, 0.7f);
         LastSplashAttackTime = Time.timeAsDouble;
         GameObject splashAttack = Instantiate(splashAttackPrefab, transform, false);
         splashAttack.AddComponent<FireSplashAttack>();
@@ -151,6 +161,8 @@ public class FireAttacks : MonoBehaviour
 
     public IEnumerator PerformHandAttack(bool rightHand)
     {
+        audioSource.PlayOneShot(handSound);
+
         if (rightHand)
             LastHandAttackTimeRight = Time.timeAsDouble;
         else
@@ -182,6 +194,10 @@ public class FireAttacks : MonoBehaviour
         GameObject fireballAttack = Instantiate(fireballAttackPrefab, transform, false);
         GameObject leftFireballAttack = Instantiate(fireballAttackPrefab, transform, false);
         fireballAttack.AddComponent<FireProjectile>();
+        AudioSource newAudioSource = Instantiate(audioSource, fireballAttack.transform, false);
+        newAudioSource.pitch = Random.Range(0.85f, 1.15f);
+        newAudioSource.Stop();
+        newAudioSource.PlayOneShot(fireballSound, Random.Range(0.3f, 0.65f));
         leftFireballAttack.AddComponent<LeftFireProjectile>();
     }
 
@@ -191,12 +207,19 @@ public class FireAttacks : MonoBehaviour
         GameObject rapidFireAttack = Instantiate(fireballAttackPrefab, transform, false);
         GameObject rapidFireAttackLeft = Instantiate(fireballAttackPrefab, transform, false);
         rapidFireAttack.AddComponent<RapidFire>();
+        AudioSource newAudioSource = Instantiate(audioSource, rapidFireAttack.transform, false);
+        newAudioSource.pitch = Random.Range(0.75f, 1.25f);
+        newAudioSource.Stop();
+        newAudioSource.PlayOneShot(rapidFireSound, Random.Range(0.3f, 0.65f));
         rapidFireAttackLeft.AddComponent<LeftRapidFire>();
     }
 
     public IEnumerator PerformFireBurst()
     {
         IsPerformingFireBurst = true;
+
+        audioSource.Stop();
+        audioSource.PlayOneShot(flamethrowerSound);
 
         // Updraft
         GameObject updraft = Instantiate(updraftPrefab, transform, false);
@@ -216,6 +239,8 @@ public class FireAttacks : MonoBehaviour
         glimmer.RotationSpeed = 180.0f;
         glimmer.MaxSize = 1.0f;
         glimmer.Lifetime = 0.4f;
+
+        audioSource.PlayOneShot(fireBurstSound);
 
         yield return new WaitForSeconds(1.0f);
 
@@ -296,8 +321,8 @@ public class FireAttacks : MonoBehaviour
 
         // Restore fire
         IsPerformingFireBurst = false;
-
         Sprite.enabled = true;
+        audioSource.Play();
     }
 
     public void DisableAttack()
