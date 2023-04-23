@@ -12,11 +12,8 @@ public class EnemyLogic : MonoBehaviour
 
     // Position Variables
     private bool _atTarget = false;
-    [SerializeField] private GameObject _targetPosition;
-
-    //Position Getters and Setters
-    public bool AtTarget { get { return _atTarget; } set { _atTarget = value; } }
-    public GameObject TargetPosition { get { return _targetPosition; } private set { } }
+    [SerializeField] private bool isLeft;
+    private Vector3 targetPosition;
 
     // Movement Variables
     [SerializeField] private float moveSpeed = 1f;
@@ -31,53 +28,102 @@ public class EnemyLogic : MonoBehaviour
     public bool CanAttack { get { return _canAttack; } set { _canAttack = value; } }
     public GameObject WaterProjectile { get { return _waterProjectile; } set { _waterProjectile = value; } }
 
+    // Health Variables
+    private int _health = 100;
+
+    // Health Getters and Setters
+    public int Health { get { return _health; } set { _health = value; } }  
+
     private void Awake()
     {
         _anim = GetComponent<Animator>();
-    }
 
-    private void Start()
-    {
-
+        if (isLeft == true)
+        {
+            targetPosition = LeftTargetBehavior.Instance.transform.position;
+        }
+        else
+        {
+            targetPosition = RightTargetBehavior.Instance.transform.position;
+        }
     }
 
     private void Update()
     {
-        if (_atTarget == false)
+        // Find current target position
+        if (isLeft == true)
         {
-            MoveToTarget();
-
-            // Attack damage player if collision detected
+            targetPosition = LeftTargetBehavior.Instance.transform.position;
         }
         else
         {
-            if (currentCooldown > 0f)
+            targetPosition = RightTargetBehavior.Instance.transform.position;
+        }
+
+        // Check is target position is reached
+        if (_atTarget == false)
+        {
+            MoveToTarget();
+        }
+        else
+        {
+            CheckTargetChange();
+            if (RoundController.Instance.GameInProgress == true)
             {
-                Debug.Log(currentCooldown);
-                currentCooldown -= Time.deltaTime;
-            }
-            else
-            {
-                FireProjectile();
-                StartCoroutine(Attack());
-                currentCooldown = attackCooldown;
+                if (currentCooldown > 0f)
+                {
+                    currentCooldown -= Time.deltaTime;
+                }
+                else
+                {
+                    FireProjectile();
+                    StartCoroutine(Attack());
+                    currentCooldown = attackCooldown;
+                }
             }
         }
     }
 
     public void FireProjectile()
     {
-        Instantiate(_waterProjectile, new Vector3(transform.position.x + 1, transform.position.y, transform.position.z), transform.rotation);
+        Instantiate(_waterProjectile, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
     }
 
     private void MoveToTarget()
     {
-        transform.position = Vector2.MoveTowards(transform.position, _targetPosition.transform.position, moveSpeed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
 
-        if (transform.position == _targetPosition.transform.position)
+        if (transform.position == targetPosition)
         {
             _atTarget = true;
+            _anim.SetBool("targetReached", true);
         }
+    }
+
+    private void CheckTargetChange()
+    {
+        if (transform.position != targetPosition)
+        {
+            _atTarget = false;
+            _anim.SetBool("targetReached", false);
+        }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        _health -= damage;
+        if (_health <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        // Play death Animation
+        RoundController.Instance.LiveEnemies--;
+        // Destroy Self
+        Destroy(gameObject);
     }
 
     private IEnumerator Attack()

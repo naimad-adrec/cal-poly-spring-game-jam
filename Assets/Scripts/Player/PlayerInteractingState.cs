@@ -6,7 +6,7 @@ public class PlayerInteractingState : PlayerBaseState
 {
     public override void EnterState(PlayerStateMachine player)
     {
-        Debug.Log("I am Interacting");
+        player.CanDodge = false;
     }
 
     public override void UpdateState(PlayerStateMachine player)
