@@ -62,11 +62,11 @@ public class PlayerDodgeState : PlayerBaseState
 
     private void ChangeCurrentAnimation(PlayerStateMachine player)
     {
-        if (player.LastDirX < 0)
+        if (player.DirX < 0)
         {
             player.Sp.flipX = true;
         }
-        else if (player.LastDirX > 0)
+        else if (player.DirX > 0)
         {
             player.Sp.flipX = false;
         }
