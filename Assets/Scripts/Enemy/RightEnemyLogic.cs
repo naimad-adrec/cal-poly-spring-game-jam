@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyLogic : MonoBehaviour
+public class RightEnemyLogic : MonoBehaviour
 {
     // Game Object Variables
     private Animator _anim;
@@ -69,9 +69,9 @@ public class EnemyLogic : MonoBehaviour
 
     private void MoveToTarget()
     {
-        transform.position = Vector2.MoveTowards(transform.position, LeftTargetBehavior.Instance.transform.position, moveSpeed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, RightTargetBehavior.Instance.transform.position, moveSpeed * Time.deltaTime);
 
-        if (transform.position == LeftTargetBehavior.Instance.transform.position)
+        if (transform.position == RightTargetBehavior.Instance.transform.position)
         {
             _atTarget = true;
             _anim.SetBool("targetReached", true);

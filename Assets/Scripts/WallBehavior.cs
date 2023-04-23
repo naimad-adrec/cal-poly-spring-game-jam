@@ -18,7 +18,6 @@ public class WallBehavior : MonoBehaviour
     {
         if (_isBuilt)
         {
-            transform.GetComponentInChildren<WallCollider>().CurrentHealth = 100;
             transform.GetChild(0).gameObject.SetActive(true);
         }
         else

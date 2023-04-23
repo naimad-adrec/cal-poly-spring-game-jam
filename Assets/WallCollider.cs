@@ -12,6 +12,11 @@ public class WallCollider : MonoBehaviour
 
     public int CurrentHealth { get { return _currentHealth; } set { _currentHealth = value; } }
 
+    private void OnEnable()
+    {
+        _currentHealth = wallHealth;
+    }
+
     private void Start()
     {
         coll = GetComponent<BoxCollider2D>();
