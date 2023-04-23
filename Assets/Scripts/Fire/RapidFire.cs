@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireProjectile : MonoBehaviour
+public class RapidFire : MonoBehaviour
 {
-    private int fireballDamage = 10;
+    private int rapidFireDamage = 0;
     private GameObject Target { get; set; }
 
     private float Rotation { get; set; }
@@ -14,7 +14,9 @@ public class FireProjectile : MonoBehaviour
     {
         Target = FindNearestEnemy();
 
-        Rotation = Target.transform.position.x < transform.position.x ? 135.0f : 45.0f;            
+        Rotation = Target.transform.position.x < transform.position.x ? 135.0f : 45.0f;
+
+        transform.localScale = Vector3.one * 0.2f;
     }
 
     // Update is called once per frame
@@ -23,7 +25,8 @@ public class FireProjectile : MonoBehaviour
         if (Target == null)
         {
             Target = FindNearestEnemy();
-            if (Target == null) {
+            if (Target == null)
+            {
                 // there are no more enemies to lock on to
                 Explode();
                 return;
@@ -32,12 +35,12 @@ public class FireProjectile : MonoBehaviour
 
         Vector2 displacement = Target.transform.position - transform.position;
         float targetRotation = Mathf.Rad2Deg * Mathf.Atan2(displacement.y, displacement.x);
-        Rotation = Mathf.LerpAngle(Rotation, targetRotation, Time.deltaTime * 2);
+        Rotation = Mathf.LerpAngle(Rotation, targetRotation, Time.deltaTime * 5);
 
         transform.rotation = Quaternion.Euler(0f, 0f, Rotation + 45.0f);
 
         Vector3 moveVector = new(Mathf.Cos(Mathf.Deg2Rad * Rotation), Mathf.Sin(Mathf.Deg2Rad * Rotation));
-        transform.position += Time.deltaTime * moveVector;
+        transform.position += Time.deltaTime * moveVector * 5.0f;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -73,6 +76,6 @@ public class FireProjectile : MonoBehaviour
 
     private void ApplyDamage(GameObject enemy)
     {
-        enemy.GetComponent<EnemyLogic>().TakeDamage(fireballDamage);
+        enemy.GetComponent<EnemyLogic>().TakeDamage(rapidFireDamage);
     }
 }

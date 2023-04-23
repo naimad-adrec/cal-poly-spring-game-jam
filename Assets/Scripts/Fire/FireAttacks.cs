@@ -8,6 +8,7 @@ public class FireAttacks : MonoBehaviour
     [SerializeField] private const double SPLASH_ATTACK_COOLDOWN = 1.5;
     [SerializeField] private const double HAND_ATTACK_COOLDOWN = 3.0;
     [SerializeField] private const double FIREBALL_ATTACK_COOLDOWN = 1.0;
+    [SerializeField] private const double RAPID_FIRE_ATTACK_COOLDOWN = 0.2;
 
     // Splash Variables
     public bool SplashAttackEnabled { get; set; } = true;
@@ -32,6 +33,10 @@ public class FireAttacks : MonoBehaviour
     private double LastFireballAttackTime { get; set; }
     [SerializeField] private GameObject fireballAttackPrefab;
     private bool EnemiesExist { get; set; }
+
+    // Rapidfire Variables
+    public bool RapidFireAttackEnabled { get; set; } = true;
+    private double LastRapidFireAttackTime { get; set; }
 
     [SerializeField] private LayerMask enemyLayer;
 
@@ -76,6 +81,12 @@ public class FireAttacks : MonoBehaviour
             PerformFireballAttack();
         }
 
+        if (RapidFireAttackEnabled && EnemiesExist &&
+            Time.timeAsDouble >= LastRapidFireAttackTime + RAPID_FIRE_ATTACK_COOLDOWN)
+        {
+            PerformRapidFireAttack();
+        }
+
     }
 
     public void PerformSplashAttack()
@@ -118,5 +129,12 @@ public class FireAttacks : MonoBehaviour
         LastFireballAttackTime = Time.timeAsDouble;
         GameObject fireballAttack = Instantiate(fireballAttackPrefab, transform, false);
         fireballAttack.AddComponent<FireProjectile>();
+    }
+
+    public void PerformRapidFireAttack()
+    {
+        LastRapidFireAttackTime = Time.timeAsDouble;
+        GameObject rapidFireAttack = Instantiate(fireballAttackPrefab, transform, false);
+        rapidFireAttack.AddComponent<RapidFire>();
     }
 }
