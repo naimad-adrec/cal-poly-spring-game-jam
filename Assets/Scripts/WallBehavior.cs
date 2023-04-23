@@ -28,6 +28,8 @@ public class WallBehavior : MonoBehaviour
 
     public void TakeResources()
     {
+        PlayerStateMachine.Instance.Animator.SetInteger("Tool", 1);
+        PlayerStateMachine.Instance.Animator.SetTrigger("Interact");
         if (PlayerStateMachine.Instance.WoodCount >= 1)
         {
             PlayerStateMachine.Instance.IsInteracting = false;
