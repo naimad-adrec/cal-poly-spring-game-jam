@@ -5,64 +5,31 @@ using UnityEngine;
 public class LeftFireProjectile : MonoBehaviour
 {
     private int fireballDamage = 10;
-    private GameObject Target { get; set; }
 
     private float Rotation { get; set; }
 
     private void Start()
     {
-        Target = FindNearestEnemy();
-
-        Rotation = Target.transform.position.x < transform.position.x ? 135.0f : 45.0f;
         fireballDamage = FireAttacks.Instance.FireballAttack;
     }
 
     private void Update()
     {
-        if (Target == null)
-        {
-            Target = FindNearestEnemy();
-            if (Target == null)
-            {
-                // there are no more enemies to lock on to
-                Explode();
-                return;
-            }
-        }
-
-        Vector2 displacement = Target.transform.position - transform.position;
-        float targetRotation = Mathf.Rad2Deg * Mathf.Atan2(displacement.y, displacement.x);
-        Rotation = Mathf.LerpAngle(Rotation, targetRotation, Time.deltaTime * 2);
-
-        transform.rotation = Quaternion.Euler(0f, 0f, Rotation + 45.0f);
-
-        Vector3 moveVector = new(Mathf.Cos(Mathf.Deg2Rad * Rotation), Mathf.Sin(Mathf.Deg2Rad * Rotation));
-        transform.position += Time.deltaTime * moveVector;
+        MoveToTarget();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject == Target)
+        if (collision.gameObject.CompareTag("Enemy Left"))
         {
             ApplyDamage(collision.gameObject);
             Explode();
         }
     }
 
-    private GameObject FindNearestEnemy()
+    private void MoveToTarget()
     {
-        GameObject closestObject = null;
-        float closestDistance = float.MaxValue;
-        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy Left"))
-        {
-            float distance = (enemy.transform.position - transform.position).sqrMagnitude;
-            if (distance < closestDistance)
-            {
-                closestObject = enemy;
-                closestDistance = distance;
-            }
-        }
-        return closestObject;
+        transform.position = Vector2.MoveTowards(transform.position, new Vector3(-24, transform.position.y, transform.position.z), 10 * Time.deltaTime);
     }
 
     public void Explode()

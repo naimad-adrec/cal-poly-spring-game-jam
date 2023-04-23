@@ -92,9 +92,9 @@ public class FireController : MonoBehaviour
         }
     }
 
-    public void IncreaseAttackDamage(int attackToIncrease, int damageIncrease)
+    public void IncreaseAttackDamage(int damageIncrease)
     {
-        attackToIncrease = attackToIncrease + damageIncrease;
+        FireAttacks.Instance.FireballAttack = FireAttacks.Instance.FireballAttack + damageIncrease;
     }
 
     public void SetMaxHealth(int healthIncrease)
@@ -107,8 +107,9 @@ public class FireController : MonoBehaviour
         woodValue = woodValue + valueIncrease;
     }
 
-    public void SetFireBallFireRate(double cooldown)
+    public void SetFireBallFireRate(int cooldown)
     {
+        Debug.Log("I was pressed");
         FireAttacks.Instance.FireballAttackCooldowns = cooldown;
     }
 

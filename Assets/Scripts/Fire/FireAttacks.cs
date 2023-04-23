@@ -26,11 +26,11 @@ public class FireAttacks : MonoBehaviour
     // Attack Cooldown Variables
     [SerializeField] private const double SPLASH_ATTACK_COOLDOWN = 1.5;
     [SerializeField] private const double HAND_ATTACK_COOLDOWN = 3.0;
-    [SerializeField] private double FIREBALL_ATTACK_COOLDOWN = 1.0;
+    [SerializeField] private int FIREBALL_ATTACK_COOLDOWN = 10;
     [SerializeField] private const double RAPID_FIRE_ATTACK_COOLDOWN = 0.2;
 
     // Attack Cooldwon Getters and Setters
-    public double FireballAttackCooldowns { get { return FIREBALL_ATTACK_COOLDOWN; } set { FIREBALL_ATTACK_COOLDOWN = value; } }
+    public int FireballAttackCooldowns { get { return FIREBALL_ATTACK_COOLDOWN; } set { FIREBALL_ATTACK_COOLDOWN = value; } }
 
     // Splash Variables
     private double LastSplashAttackTime { get; set; }
@@ -73,6 +73,12 @@ public class FireAttacks : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        _fireballAttack = 10;
+        _rapidFireAttack = 5;
+        _splashAttack = 50;
+        _handAttack = 50;
+
     }
 
     private void Start()
