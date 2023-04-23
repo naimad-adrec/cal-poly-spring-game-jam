@@ -69,8 +69,6 @@ public class FireAttacks : MonoBehaviour
         IsPerformingFireBurst = false;
 
         Sprite = GetComponent<SpriteRenderer>();
-
-        StartCoroutine(PerformFireBurst());
     }
 
     private void Update()
@@ -179,8 +177,6 @@ public class FireAttacks : MonoBehaviour
 
     public IEnumerator PerformFireBurst()
     {
-        yield return new WaitForSeconds(1.0f);
-
         IsPerformingFireBurst = true;
 
         audioSource.Stop();
