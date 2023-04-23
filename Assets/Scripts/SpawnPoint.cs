@@ -15,12 +15,15 @@ public class SpawnPoint : MonoBehaviour
     public int LiveEnemies { get { return _liveEnemies; } private set {  } }
 
     // Timer Variables
-    [SerializeField] private float spawnTime;
+    [SerializeField] private float _spawnTime;
     private float currentSpawnTime;
+
+    // Timer Getters and Setters
+    public float SpawnTime { get { return _spawnTime; } set { _spawnTime = value; } }
 
     private void Start()
     {
-        currentSpawnTime = spawnTime;
+        currentSpawnTime = _spawnTime;
     }
 
     private void Update()
@@ -34,8 +37,6 @@ public class SpawnPoint : MonoBehaviour
             SpawnEnemy();
         }
         // Timer for Spawn Countdown or round
-
-        //
     }
 
     private void SpawnEnemy()
@@ -45,7 +46,7 @@ public class SpawnPoint : MonoBehaviour
             Instantiate(enemy, transform.position, transform.rotation);
             spawnedEnemies++;
             _liveEnemies++;
-            currentSpawnTime = spawnTime;
+            currentSpawnTime = _spawnTime;
         }
     }
 }

@@ -135,6 +135,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7b35832a64dd44c3a1146239e0dbb10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetPosition: {fileID: 0}
+  _targetPosition: {fileID: 3434987938188167178, guid: 2e20c8d0daa5dea46aaee6b58cce7a10, type: 3}
   moveSpeed: 1
   _waterProjectile: {fileID: 3197580302945035733, guid: b7982546d351244ea9c44f277867b5a0, type: 3}

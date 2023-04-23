@@ -42,5 +42,10 @@ public class RoundController : MonoBehaviour
         _currentRoundMax = _roundMaxArray[_roundCount - 1];
         leftSpawn.RoundMax = _currentRoundMax;
         rightSpawn.RoundMax = _currentRoundMax;
+        if (_roundCount % 2 == 1)
+        {
+            leftSpawn.SpawnTime -= 1f;
+            rightSpawn.SpawnTime -= 1f;
+        }
     }
 }
