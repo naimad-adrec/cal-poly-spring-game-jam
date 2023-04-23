@@ -6,7 +6,7 @@ public class PlayerDodgeState : PlayerBaseState
 {
     // Dash Variables
     private Vector3 moveDir;
-    private float dodgeCooldown = 3f;
+    //private float dodgeCooldown = 3f;
     private float dodgeTime = 0.2f;
     private float currentDodgeTime;
 

@@ -6,8 +6,13 @@ public class SpawnPoint : MonoBehaviour
 {
     // Enemy Variables
     [SerializeField] private GameObject enemy;
-    private float roundMax;
-    private int currentNumOfEnemies = 0;
+    private float _roundMax;
+    private int spawnedEnemies = 0;
+    private int _liveEnemies = 0;
+
+    // Enemy Getters and Setters
+    public float RoundMax {  get { return _roundMax; } set { _roundMax = value; } }
+    public int LiveEnemies { get { return _liveEnemies; } private set {  } }
 
     // Timer Variables
     [SerializeField] private float spawnTime;
@@ -35,10 +40,12 @@ public class SpawnPoint : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        if (currentNumOfEnemies < roundMax)
+        if (spawnedEnemies < _roundMax)
         {
             Instantiate(enemy, transform.position, transform.rotation);
-            currentNumOfEnemies++;
+            spawnedEnemies++;
+            _liveEnemies++;
+            currentSpawnTime = spawnTime;
         }
     }
 }
