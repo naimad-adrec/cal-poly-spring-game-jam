@@ -24,11 +24,12 @@ public class WallBehavior : MonoBehaviour
         {
             transform.GetChild(0).gameObject.SetActive(false);
         }
-        // Check if build progress is met
     }
 
     public void TakeResources()
     {
+        PlayerStateMachine.Instance.Animator.SetInteger("Tool", 1);
+        PlayerStateMachine.Instance.Animator.SetTrigger("Interact");
         if (PlayerStateMachine.Instance.WoodCount >= 1)
         {
             PlayerStateMachine.Instance.IsInteracting = false;

@@ -9,7 +9,6 @@ public class RapidFire : MonoBehaviour
 
     private float Rotation { get; set; }
 
-    // Start is called before the first frame update
     void Start()
     {
         Target = FindNearestEnemy();
@@ -17,9 +16,9 @@ public class RapidFire : MonoBehaviour
         Rotation = Target.transform.position.x < transform.position.x ? 135.0f : 45.0f;
 
         transform.localScale = Vector3.one * 0.2f;
+        rapidFireDamage = FireAttacks.Instance.RapidFireAttack;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Target == null)

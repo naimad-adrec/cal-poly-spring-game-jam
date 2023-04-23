@@ -13,12 +13,14 @@ public class FireHandAttack : MonoBehaviour
         EnemiesInHurtBox = new();
         GetComponent<SpriteRenderer>().sortingLayerName = "Fire";
         StartCoroutine(HitEnemy());
+
+        handDamage = FireAttacks.Instance.HandAttack;
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject target = collision.gameObject;
-        if (target.CompareTag("Enemy") && !EnemiesInHurtBox.Contains(target))
+        if ((target.CompareTag("Enemy") || target.CompareTag("Enemy Left")) && !EnemiesInHurtBox.Contains(target))
         {
             EnemiesInHurtBox.Add(target);
         }

@@ -7,15 +7,23 @@ public class RoundController : MonoBehaviour
 {
     public static RoundController Instance;
 
+    // Game Variables
+    private bool _gameInProgress = true;
+
+    // Game Getters and Setters
+    public bool GameInProgress { get { return _gameInProgress; } private set { } }
+
     // Round Variables
     private bool roundInProgress = false;
     private int _roundCount = 0;
+    private int _finalRoundCount;
     private int[] _roundMaxArray = new int[7] {6, 8, 10, 16, 20, 26, 30};
     private int _currentRoundMax;
     private float roundRestTimer = 11f;
 
     // Round Getters and Setters
     public int RoundCount { get { return _roundCount; } private set { } }
+    public bool RoundInProgress { get { return roundInProgress; } private set { } }
 
     // Enemy Variables
     private int _liveEnemies = 0;
@@ -38,35 +46,31 @@ public class RoundController : MonoBehaviour
         rightSpawn.RoundMax = _currentRoundMax;
     }
 
-    private void Start()
-    {
-        
-    }
-
-
     private void Update()
     {
-        if (roundInProgress == false)
+        if (_gameInProgress)
         {
-            if (roundRestTimer > 0)
+            if (roundInProgress == false)
             {
-                roundRestTimer -= Time.deltaTime;
+                if (roundRestTimer > 0)
+                {
+                    roundRestTimer -= Time.deltaTime;
+                }
+                else
+                {
+                    roundInProgress = true;
+                    StartNewRound();
+                    roundRestTimer = leftSpawn.SpawnTime;
+                }
             }
             else
             {
-                roundInProgress = true;
-                StartNewRound();
-                roundRestTimer = leftSpawn.SpawnTime;
+                if (LiveEnemies == 0)
+                {
+                    roundInProgress = false;
+                }
             }
         }
-        else
-        {
-            if (LiveEnemies == 0)
-            {
-                roundInProgress = false;
-            }
-        }
-
     }
 
     private void StartNewRound()
@@ -80,5 +84,12 @@ public class RoundController : MonoBehaviour
             leftSpawn.SpawnTime -= 1f;
             rightSpawn.SpawnTime -= 1f;
         }
+    }
+
+    public void GameOver()
+    {
+        Debug.Log("GameOver");
+        _gameInProgress = false;
+        _finalRoundCount = _roundCount;
     }
 }

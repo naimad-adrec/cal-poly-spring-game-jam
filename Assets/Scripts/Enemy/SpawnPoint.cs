@@ -26,15 +26,17 @@ public class SpawnPoint : MonoBehaviour
 
     private void Update()
     {
-        if (currentSpawnTime > 0f)
+        if (RoundController.Instance.GameInProgress == true)
         {
-            currentSpawnTime -= Time.deltaTime;
+            if (currentSpawnTime > 0f)
+            {
+                currentSpawnTime -= Time.deltaTime;
+            }
+            else
+            {
+                SpawnEnemy();
+            }
         }
-        else
-        {
-            SpawnEnemy();
-        }
-        // Timer for Spawn Countdown or round
     }
 
     private void SpawnEnemy()

@@ -20,24 +20,32 @@ public class TreeController : MonoBehaviour
             PlayerStateMachine.Instance.IsInteracting = false;
             PlayerStateMachine.Instance.gameObject.transform.GetChild(0)
                 .GetComponent<PlayerAudioController>().PlayTreeBreakSound();
-            StartCoroutine(DropWood());
+            DropWood();
         }
         else
         {
             Debug.Log("Taken Damage");
             PlayerStateMachine.Instance.IsInteracting = false;
             treeHealth--;
-
         }
     }
 
-    private IEnumerator DropWood()
+    private void DropWood()
     {
-        Instantiate(wood, transform.position, transform.rotation);
-        Instantiate(wood, transform.position, transform.rotation);
-        Instantiate(wood, transform.position, transform.rotation);
-
-        yield return new WaitForSeconds(1);
+        if (FireController.Instance.DropRateIncreased == false)
+        {
+            Instantiate(wood, transform.position, transform.rotation);
+            Instantiate(wood, transform.position, transform.rotation);
+            Instantiate(wood, transform.position, transform.rotation);
+        }
+        else
+        {
+            Instantiate(wood, transform.position, transform.rotation);
+            Instantiate(wood, transform.position, transform.rotation);
+            Instantiate(wood, transform.position, transform.rotation);
+            Instantiate(wood, transform.position, transform.rotation);
+            Instantiate(wood, transform.position, transform.rotation);
+        }
 
         Destroy(gameObject);
     }
