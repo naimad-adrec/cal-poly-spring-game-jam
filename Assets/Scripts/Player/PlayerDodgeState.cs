@@ -12,6 +12,7 @@ public class PlayerDodgeState : PlayerBaseState
 
     public override void EnterState(PlayerStateMachine player)
     {
+        FireController.Instance.FireHealth -= 5;
         currentDodgeTime = dodgeTime;
         player.Coll.enabled = false;
     }

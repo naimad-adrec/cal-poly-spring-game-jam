@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyLogic : MonoBehaviour
+public class RightEnemyLogic : MonoBehaviour
 {
     // Game Object Variables
     private Animator _anim;
@@ -12,8 +12,6 @@ public class EnemyLogic : MonoBehaviour
 
     // Position Variables
     private bool _atTarget = false;
-    [SerializeField] private bool isLeft;
-    private Vector3 targetPosition;
 
     // Movement Variables
     [SerializeField] private float moveSpeed = 1f;
@@ -32,20 +30,11 @@ public class EnemyLogic : MonoBehaviour
     private int _health = 100;
 
     // Health Getters and Setters
-    public int Health { get { return _health; } set { _health = value; } }  
+    public int Health { get { return _health; } set { _health = value; } }
 
     private void Awake()
     {
         _anim = GetComponent<Animator>();
-
-        if (isLeft == true)
-        {
-            targetPosition = LeftTargetBehavior.Instance.transform.position;
-        }
-        else
-        {
-            targetPosition = RightTargetBehavior.Instance.transform.position;
-        }
     }
 
     private void Start()
@@ -55,17 +44,6 @@ public class EnemyLogic : MonoBehaviour
 
     private void Update()
     {
-        // Find current target position
-        if (isLeft == true)
-        {
-            targetPosition = LeftTargetBehavior.Instance.transform.position;
-        }
-        else
-        {
-            targetPosition = RightTargetBehavior.Instance.transform.position;
-        }
-
-        // Check is target position is reached
         if (_atTarget == false)
         {
             MoveToTarget();
@@ -96,9 +74,9 @@ public class EnemyLogic : MonoBehaviour
 
     private void MoveToTarget()
     {
-        transform.position = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, RightTargetBehavior.Instance.transform.position, moveSpeed * Time.deltaTime);
 
-        if (transform.position == targetPosition)
+        if (transform.position == RightTargetBehavior.Instance.transform.position)
         {
             _atTarget = true;
             _anim.SetBool("targetReached", true);
@@ -107,7 +85,7 @@ public class EnemyLogic : MonoBehaviour
 
     private void CheckTargetChange()
     {
-        if (transform.position != targetPosition)
+        if (transform.position != LeftTargetBehavior.Instance.transform.position)
         {
             _atTarget = false;
             _anim.SetBool("targetReached", false);
@@ -126,7 +104,7 @@ public class EnemyLogic : MonoBehaviour
     private void Die()
     {
         // Play death Animation
-        RoundController.Instance.LiveEnemies--;
+
         // Destroy Self
         Destroy(gameObject);
     }
