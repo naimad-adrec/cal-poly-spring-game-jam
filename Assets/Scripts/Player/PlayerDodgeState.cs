@@ -21,8 +21,7 @@ public class PlayerDodgeState : PlayerBaseState
 
         currentDodgeTime = dodgeTime;
         player.Coll.enabled = false;
-        player.gameObject.transform.GetChild(0)
-            .GetComponent<PlayerAudioController>().PlayDashSound();
+        player.gameObject.transform.GetChild(0).GetComponent<PlayerAudioController>().PlayDashSound();
     }
 
     public override void UpdateState(PlayerStateMachine player)
