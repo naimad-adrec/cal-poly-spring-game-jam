@@ -32,7 +32,10 @@ public class EnemyLogic : MonoBehaviour
     private int _health = 100;
 
     // Health Getters and Setters
-    public int Health { get { return _health; } set { _health = value; } }  
+    public int Health { get { return _health; } set { _health = value; } }
+
+    // Coal drop prefabs
+    [SerializeField] private GameObject coalPrefab;
 
     private void Awake()
     {
@@ -122,6 +125,12 @@ public class EnemyLogic : MonoBehaviour
     {
         // Play death Animation
         RoundController.Instance.LiveEnemies--;
+
+        if (Random.Range(0.0f, 1.0f) > 0.5f)
+        {
+            Instantiate(coalPrefab, transform.position, transform.rotation);
+        }
+
         // Destroy Self
         Destroy(gameObject);
     }

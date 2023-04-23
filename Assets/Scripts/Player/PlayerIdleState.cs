@@ -11,6 +11,8 @@ public class PlayerIdleState : PlayerBaseState
     public override void EnterState(PlayerStateMachine player)
     {
         player.CanDodge = false;
+        player.Animator.SetBool("IsMoving", false);
+        ChangeCurrentAnimation(player);
     }
 
     public override void UpdateState(PlayerStateMachine player)
@@ -18,6 +20,7 @@ public class PlayerIdleState : PlayerBaseState
         if (player.DirX == 0f && player.IsInteracting == false)
         {
             ApplyPlayerMovement(player);
+            ChangeCurrentAnimation(player);
         }
         else if (player.DirX != 0f && player.IsInteracting == false)
         {
@@ -38,5 +41,17 @@ public class PlayerIdleState : PlayerBaseState
     {
         moveDir = new Vector3(player.DirX * moveSpeed * Time.fixedDeltaTime, player.transform.position.y, player.transform.position.z);
         player.Rb.velocity = moveDir;
+    }
+
+    private void ChangeCurrentAnimation(PlayerStateMachine player)
+    {
+        if (player.LastDirX < 0)
+        {
+            player.Sp.flipX = true;
+        }
+        else if (player.LastDirX > 0)
+        {
+            player.Sp.flipX = false;
+        }
     }
 }

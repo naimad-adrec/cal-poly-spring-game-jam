@@ -18,11 +18,15 @@ public class ResourceDrop : MonoBehaviour
         {
             if (resourceName == "Wood")
             {
+                collision.gameObject.transform.GetChild(0)
+                    .GetComponent<PlayerAudioController>().PlayWoodCollectSound();
                 PlayerStateMachine.Instance.WoodCount++;
                 Destroy(gameObject);
             }
             else
             {
+                collision.gameObject.transform.GetChild(0)
+                    .GetComponent<PlayerAudioController>().PlayCoalCollectSound();
                 PlayerStateMachine.Instance.CoalCount++;
                 Destroy(gameObject);
             }

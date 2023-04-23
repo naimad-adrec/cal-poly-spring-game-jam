@@ -6,26 +6,30 @@ public class PlayerDodgeState : PlayerBaseState
 {
     // Dash Variables
     private Vector3 moveDir;
-    //private float dodgeCooldown = 3f;
     private float dodgeTime = 0.2f;
     private float currentDodgeTime;
 
     public override void EnterState(PlayerStateMachine player)
     {
+        ChangeCurrentAnimation(player);
         FireController.Instance.FireHealth -= 5;
         if (FireController.Instance.FireHealth <= 0)
         {
             FireController.Instance.FireDies();
         }
+        player.Animator.SetTrigger("Dash");
 
         currentDodgeTime = dodgeTime;
         player.Coll.enabled = false;
+        player.gameObject.transform.GetChild(0)
+            .GetComponent<PlayerAudioController>().PlayDashSound();
     }
 
     public override void UpdateState(PlayerStateMachine player)
     {
         if (player.IsDodging == true)
         {
+            ChangeCurrentAnimation(player);
             if (currentDodgeTime <= 0)
             {
                 player.Coll.enabled = true;
@@ -56,5 +60,17 @@ public class PlayerDodgeState : PlayerBaseState
     {
         moveDir = new Vector3(player.DirX * player.DodgeSpeed * Time.fixedDeltaTime, player.transform.position.y, player.transform.position.z);
         player.Rb.velocity = moveDir;
+    }
+
+    private void ChangeCurrentAnimation(PlayerStateMachine player)
+    {
+        if (player.DirX < 0)
+        {
+            player.Sp.flipX = true;
+        }
+        else if (player.DirX > 0)
+        {
+            player.Sp.flipX = false;
+        }
     }
 }

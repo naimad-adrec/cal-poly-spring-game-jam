@@ -20,14 +20,19 @@ public class PlayerStateMachine : MonoBehaviour
     private Rigidbody2D _rb;
     private Animator _animator;
     private BoxCollider2D _coll;
+    private SpriteRenderer _sp;
 
     // Game Component Getters and Setters
     public Rigidbody2D Rb { get { return _rb; } set { _rb = value; } }
     public Animator Animator { get { return _animator; } set { _animator = value; } }
     public BoxCollider2D Coll { get { return _coll; } set { _coll = value; } }
+    public SpriteRenderer Sp { get { return _sp; } set { _sp = value; } }
+
+
 
     // Input Variables
     private float _dirX;
+    private float _lastDirX;
     private bool _isInteracting;
     private bool inRange = false;
     private bool _canDodge = true;
@@ -35,6 +40,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     // Input Getters and Setters
     public float DirX { get { return _dirX; } set { _dirX = value; } }
+    public float LastDirX { get { return _lastDirX; } set { _lastDirX = value; } }
     public bool IsInteracting { get { return _isInteracting; } set { _isInteracting = value; } }
     public bool CanDodge { get { return _canDodge; } set { _canDodge = value; } }
     public bool IsDodging { get { return _isDodging; } set { _isDodging = value; } }
@@ -62,6 +68,8 @@ public class PlayerStateMachine : MonoBehaviour
         // Call Game Components
         _rb = GetComponent<Rigidbody2D>();
         _coll = GetComponent<BoxCollider2D>();
+        _animator = GetComponent<Animator>();
+        _sp = GetComponent<SpriteRenderer>();
 
         // Initialize Input System
         CustomInputs customInput = new CustomInputs();
@@ -98,7 +106,9 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void OnMoveStop(InputAction.CallbackContext context)
     {
+        _lastDirX = _dirX;
         _dirX = 0;
+
     }
 
     private void OnDodge(InputAction.CallbackContext context)

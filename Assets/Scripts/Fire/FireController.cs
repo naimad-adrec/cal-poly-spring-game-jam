@@ -29,6 +29,10 @@ public class FireController : MonoBehaviour
     // Upgrade Variables
     private Upgrades upgrades;
     private int woodValue = 20;
+    private bool _dropRateIncreased = false;
+
+    // Upgrade Getters and Setters
+    public bool DropRateIncreased { get { return _dropRateIncreased; }  private set { } }
 
     private void Awake()
     {
@@ -55,6 +59,8 @@ public class FireController : MonoBehaviour
 
     public void TakeResources()
     {
+        PlayerStateMachine.Instance.Animator.SetInteger("Tool", 1);
+        PlayerStateMachine.Instance.Animator.SetTrigger("Interact");
         if (PlayerStateMachine.Instance.WoodCount >= 1)
         {
             PlayerStateMachine.Instance.IsInteracting = false;
@@ -62,6 +68,10 @@ public class FireController : MonoBehaviour
             _fireHealth += woodValue;
 
             // Play flame noise
+            PlayerAudioController audioController = PlayerStateMachine.Instance
+                .gameObject.transform.GetChild(0).GetComponent<PlayerAudioController>();
+            audioController.PlayTreeBreakSound();
+            audioController.PlayFlameSound();
         }
         else
         {
@@ -97,6 +107,11 @@ public class FireController : MonoBehaviour
         FireAttacks.Instance.FireballAttack = FireAttacks.Instance.FireballAttack + damageIncrease;
     }
 
+    public void IncreaseRapidDamage(int damageIncrease)
+    {
+        FireAttacks.Instance.RapidFireAttack = FireAttacks.Instance.RapidFireAttack + damageIncrease;
+    }
+
     public void SetMaxHealth(int healthIncrease)
     {
         _maxFireHealth = _maxFireHealth + healthIncrease;
@@ -126,5 +141,10 @@ public class FireController : MonoBehaviour
     public bool CanUseRapidAttack()
     {
         return upgrades.IsUpgradeUnlocked(Upgrades.UpgradeType.rapidAttack);
+    }
+
+    public void DropRateIncrease()
+    {
+        _dropRateIncreased = true;
     }
 }

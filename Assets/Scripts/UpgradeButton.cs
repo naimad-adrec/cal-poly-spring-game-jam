@@ -7,7 +7,9 @@ public class UpgradeButton : MonoBehaviour
 {
     [SerializeField] private int coalCost;
     [SerializeField] private Button currentbutton;
-    private bool purchased = false;
+    private bool _purchased = false;
+
+    public bool Purchased { get { return _purchased;  } set { _purchased = value;  } }
 
     private void Start()
     {
@@ -16,7 +18,7 @@ public class UpgradeButton : MonoBehaviour
 
     private void Update()
     {
-        if (purchased == false)
+        if (_purchased == false)
         {
             if (PlayerStateMachine.Instance.CoalCount >= coalCost)
             {
@@ -31,6 +33,6 @@ public class UpgradeButton : MonoBehaviour
 
     public void SetPurchaseToTrue()
     {
-        purchased = true;
+        _purchased = true;
     }
 }

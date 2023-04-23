@@ -4,21 +4,18 @@ using UnityEngine;
 
 public class Upgrades
 {
-    public enum UpgradeType { handAttack, splashAttack, rapidAttack, fireBallAttackRate, fireHealth, woodValue, }
+    public enum UpgradeType { handAttack, splashAttack, rapidAttack, fireBallAttackRate1, fireBallAttackRate2, fireHealth1, fireHealth2, woodValue, fireballDamage, rapidDamage, woodDrop, fireburst}
 
     private List<UpgradeType> unlockedUpgrades;
-    private List<UpgradeType> lockedUpgrades;
 
     public Upgrades ()
     {
         unlockedUpgrades = new List<UpgradeType>();
-        lockedUpgrades = new List<UpgradeType>();
     }
 
     public void UnlockUpgrade(UpgradeType upgrade)
     {
         unlockedUpgrades.Add(upgrade);
-        lockedUpgrades.Remove(upgrade);
     }
 
     public bool IsUpgradeUnlocked(UpgradeType upgrade)
