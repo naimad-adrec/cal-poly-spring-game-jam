@@ -3759,7 +3759,7 @@ PrefabInstance:
     - target: {fileID: 2427324711414881906, guid: cf4912de16589424d9746e2d5e3bfa98, type: 3}
       propertyPath: enemy
       value: 
-      objectReference: {fileID: 4768435424301022843, guid: b1b1cfc3843147042b436334c63b1eda, type: 3}
+      objectReference: {fileID: 7132128282255651226, guid: b1b1cfc3843147042b436334c63b1eda, type: 3}
     - target: {fileID: 2427324711414881916, guid: cf4912de16589424d9746e2d5e3bfa98, type: 3}
       propertyPath: m_Name
       value: Enemy Spawn Point Right
@@ -5180,7 +5180,7 @@ PrefabInstance:
     - target: {fileID: 2793815285174751817, guid: 1a83c96b99ec8b8498faa1c6255f3de5, type: 3}
       propertyPath: enemy
       value: 
-      objectReference: {fileID: 5803775533516385012, guid: e1a88500a29167f47806d9ec7194414c, type: 3}
+      objectReference: {fileID: 7678990359849206515, guid: e1a88500a29167f47806d9ec7194414c, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a83c96b99ec8b8498faa1c6255f3de5, type: 3}
 --- !u!1 &1525969362
@@ -5987,6 +5987,7 @@ GameObject:
   - component: {fileID: 1704294289}
   - component: {fileID: 1704294291}
   - component: {fileID: 1704294290}
+  - component: {fileID: 1704294292}
   m_Layer: 5
   m_Name: Round Count
   m_TagString: Untagged
@@ -6111,6 +6112,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1704294288}
   m_CullTransparentMesh: 1
+--- !u!114 &1704294292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704294288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cddb241052cf44d4f97bb9f0abacdeba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roundCount: {fileID: 1704294290}
 --- !u!1 &1720205829
 GameObject:
   m_ObjectHideFlags: 0
