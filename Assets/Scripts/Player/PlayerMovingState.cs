@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
@@ -5,23 +6,26 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 public class PlayerMovingState : PlayerBaseState
 {
     // Movement Variables
-    private float moveSpeed = 200f;
     private Vector3 moveDir;
 
     public override void EnterState(PlayerStateMachine player)
     {
-
+        player.CanDodge = true;
     }
 
     public override void UpdateState(PlayerStateMachine player)
     {
-        if (player.DirX != 0f && player.IsInteracting == false)
+        if (player.DirX != 0f && player.IsInteracting == false && player.IsDodging == false)
         {
             ApplyPlayerMovement(player);
         }
-        else if (player.DirX == 0f && player.IsInteracting == false)
+        else if (player.DirX == 0f && player.IsInteracting == false && player.IsDodging == false)
         {
             player.SwitchState(player.IdleState);
+        }
+        else if (player.DirX != 0f && player.IsInteracting == false && player.IsDodging == true)
+        {
+            player.SwitchState(player.DodgeState);
         }
         else
         {
@@ -36,7 +40,7 @@ public class PlayerMovingState : PlayerBaseState
 
     private void ApplyPlayerMovement(PlayerStateMachine player)
     {
-        moveDir = new Vector3(player.DirX * moveSpeed * Time.fixedDeltaTime, player.transform.position.y, player.transform.position.z);
+        moveDir = new Vector3(player.DirX * player.MoveSpeed * Time.fixedDeltaTime, player.transform.position.y, player.transform.position.z);
         player.Rb.velocity = moveDir;
     }
 

@@ -14,23 +14,37 @@ public class PlayerStateMachine : MonoBehaviour
     public PlayerMovingState MovingState = new PlayerMovingState();
     public PlayerIdleState IdleState = new PlayerIdleState();
     public PlayerInteractingState InteractingState = new PlayerInteractingState();
+    public PlayerDodgeState DodgeState = new PlayerDodgeState();
 
     // Game Component Variables
     private Rigidbody2D _rb;
     private Animator _animator;
+    private BoxCollider2D _coll;
 
     // Game Component Getters and Setters
     public Rigidbody2D Rb { get { return _rb; } set { _rb = value; } }
     public Animator Animator { get { return _animator; } set { _animator = value; } }
+    public BoxCollider2D Coll { get { return _coll; } set { _coll = value; } }
 
     // Input Variables
     private float _dirX;
     private bool _isInteracting;
     private bool inRange = false;
+    private bool _canDodge = true;
+    private bool _isDodging = false;
 
     // Input Getters and Setters
     public float DirX { get { return _dirX; } set { _dirX = value; } }
     public bool IsInteracting { get { return _isInteracting; } set { _isInteracting = value; } }
+    public bool CanDodge { get { return _canDodge; } set { _canDodge = value; } }
+    public bool IsDodging { get { return _isDodging; } set { _isDodging = value; } }
+
+    // Movement Variables
+    [SerializeField] private float _moveSpeed = 200f;
+    [SerializeField] private float _dodgeSpeed = 500f;
+
+    public float MoveSpeed { get { return _moveSpeed; } set { _moveSpeed = value; } }
+    public float DodgeSpeed { get { return _dodgeSpeed; } set { _dodgeSpeed = value; } }
 
     // Resource Variables
     private int _woodCount;
@@ -47,12 +61,14 @@ public class PlayerStateMachine : MonoBehaviour
 
         // Call Game Components
         _rb = GetComponent<Rigidbody2D>();
+        _coll = GetComponent<BoxCollider2D>();
 
         // Initialize Input System
         CustomInputs customInput = new CustomInputs();
         customInput.Player.Enable();
         customInput.Player.Movement.performed += OnMove;
         customInput.Player.Movement.canceled += OnMoveStop;
+        customInput.Player.Dodge.performed += OnDodge;
         customInput.Player.Interact.performed += OnInteract;
     }
 
@@ -85,6 +101,11 @@ public class PlayerStateMachine : MonoBehaviour
         _dirX = 0;
     }
 
+    private void OnDodge(InputAction.CallbackContext context)
+    {
+        IsDodging = true;
+    }
+
     private void OnInteract(InputAction.CallbackContext context)
     {
         if (inRange == true)
@@ -95,7 +116,18 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            if (WoodCount > 0)
+            {
+                WoodCount -= 1;
+            }
+            if (CoalCount > 0)
+            {
+                CoalCount -= 1;
+            }
+            StartCoroutine(DisableHitbox());
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -115,8 +147,10 @@ public class PlayerStateMachine : MonoBehaviour
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private IEnumerator DisableHitbox()
     {
-
+        _rb.simulated = false;
+        yield return new WaitForSeconds(1f);
+        _rb.simulated = true;
     }
 }
