@@ -10,6 +10,7 @@ public class PlayerAudioController : MonoBehaviour
     [SerializeField] private AudioClip coalCollectSound;
     [SerializeField] private AudioClip buildSound;
     [SerializeField] private AudioClip dashSound;
+    [SerializeField] private AudioClip flameSound;
 
     private AudioSource PlayerAudioSource { get; set; }
 
@@ -53,6 +54,11 @@ public class PlayerAudioController : MonoBehaviour
     public void PlayDashSound()
     {
         PlayerAudioSource.PlayOneShot(dashSound, 0.5f);
+    }
+
+    public void PlayFlameSound()
+    {
+        PlayerAudioSource.PlayOneShot(flameSound, 1.3f);
     }
 
     public bool IsPlayingSound()
