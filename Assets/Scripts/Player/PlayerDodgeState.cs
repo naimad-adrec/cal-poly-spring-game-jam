@@ -15,6 +15,8 @@ public class PlayerDodgeState : PlayerBaseState
         FireController.Instance.FireHealth -= 5;
         currentDodgeTime = dodgeTime;
         player.Coll.enabled = false;
+        player.gameObject.transform.GetChild(0)
+            .GetComponent<PlayerAudioController>().PlayDashSound();
     }
 
     public override void UpdateState(PlayerStateMachine player)

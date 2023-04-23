@@ -7,7 +7,9 @@ public class PlayerAudioController : MonoBehaviour
     [SerializeField] private AudioClip woodHitSound;
     [SerializeField] private AudioClip treeBreakSound;
     [SerializeField] private AudioClip woodCollectSound;
+    [SerializeField] private AudioClip coalCollectSound;
     [SerializeField] private AudioClip buildSound;
+    [SerializeField] private AudioClip dashSound;
 
     private AudioSource PlayerAudioSource { get; set; }
 
@@ -38,9 +40,19 @@ public class PlayerAudioController : MonoBehaviour
         PlayerAudioSource.PlayOneShot(woodCollectSound);
     }
 
+    public void PlayCoalCollectSound()
+    {
+        PlayerAudioSource.PlayOneShot(coalCollectSound);
+    }
+
     public void PlayBuildSound()
     {
         PlayerAudioSource.PlayOneShot(buildSound);
+    }
+
+    public void PlayDashSound()
+    {
+        PlayerAudioSource.PlayOneShot(dashSound, 0.5f);
     }
 
     public bool IsPlayingSound()

@@ -25,6 +25,8 @@ public class ResourceDrop : MonoBehaviour
             }
             else
             {
+                collision.gameObject.transform.GetChild(0)
+                    .GetComponent<PlayerAudioController>().PlayCoalCollectSound();
                 PlayerStateMachine.Instance.CoalCount++;
                 Destroy(gameObject);
             }
