@@ -22,6 +22,11 @@ public class UISkillTree : MonoBehaviour
 
     private Upgrades upgrades;
 
+    private void Start()
+    {
+
+    }
+
     private void Update()
     {
         if (rapidUnlock.GetComponent<UpgradeButton>().Purchased == true)
@@ -38,7 +43,7 @@ public class UISkillTree : MonoBehaviour
         }
         if (fireburstUnlock.GetComponent<UpgradeButton>().Purchased == true)
         {
-            upgrades.UnlockUpgrade(Upgrades.UpgradeType.fireBurst);
+            upgrades.UnlockUpgrade(Upgrades.UpgradeType.fireburst);
         }
     }
 }

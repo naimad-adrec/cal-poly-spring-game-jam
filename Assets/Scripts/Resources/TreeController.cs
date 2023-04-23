@@ -28,9 +28,20 @@ public class TreeController : MonoBehaviour
 
     private void DropWood()
     {
-        Instantiate(wood, transform.position, transform.rotation);
-        Instantiate(wood, transform.position, transform.rotation);
-        Instantiate(wood, transform.position, transform.rotation);
+        if (FireController.Instance.DropRateIncreased == false)
+        {
+            Instantiate(wood, transform.position, transform.rotation);
+            Instantiate(wood, transform.position, transform.rotation);
+            Instantiate(wood, transform.position, transform.rotation);
+        }
+        else
+        {
+            Instantiate(wood, transform.position, transform.rotation);
+            Instantiate(wood, transform.position, transform.rotation);
+            Instantiate(wood, transform.position, transform.rotation);
+            Instantiate(wood, transform.position, transform.rotation);
+            Instantiate(wood, transform.position, transform.rotation);
+        }
 
         Destroy(gameObject);
     }

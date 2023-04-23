@@ -23,6 +23,7 @@ public class RoundController : MonoBehaviour
 
     // Round Getters and Setters
     public int RoundCount { get { return _roundCount; } private set { } }
+    public bool RoundInProgress { get { return roundInProgress; } private set { } }
 
     // Enemy Variables
     private int _liveEnemies = 0;

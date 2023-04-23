@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Upgrades
 {
-    public enum UpgradeType { handAttack, splashAttack, rapidAttack, fireBallAttackRate, fireHealth, woodValue, fireBurst, woodDrop}
+    public enum UpgradeType { handAttack, splashAttack, rapidAttack, fireBallAttackRate1, fireBallAttackRate2, fireHealth1, fireHealth2, woodValue, fireballDamage, rapidDamage, woodDrop, fireburst}
 
     private List<UpgradeType> unlockedUpgrades;
 
