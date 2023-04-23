@@ -6,14 +6,31 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class FireAttacks : MonoBehaviour
 {
+    public static FireAttacks Instance;
+
     // Game Status Variables
     private bool canAttack = true;
+
+    // Damage Variables
+    private int _fireballAttack;
+    private int _rapidFireAttack;
+    private int _handAttack;
+    private int _splashAttack;
+
+    // Damage Getters and Setters
+    public int FireballAttack { get { return _fireballAttack; } set { _fireballAttack = value; } }
+    public int RapidFireAttack { get { return _rapidFireAttack; } set { _rapidFireAttack = value; } }
+    public int HandAttack { get { return _handAttack; } set { _handAttack = value; } }
+    public int SplashAttack { get { return _splashAttack; } set { _splashAttack = value; } }
 
     // Attack Cooldown Variables
     [SerializeField] private const double SPLASH_ATTACK_COOLDOWN = 1.5;
     [SerializeField] private const double HAND_ATTACK_COOLDOWN = 3.0;
-    [SerializeField] private const double FIREBALL_ATTACK_COOLDOWN = 1.0;
+    [SerializeField] private double FIREBALL_ATTACK_COOLDOWN = 1.0;
     [SerializeField] private const double RAPID_FIRE_ATTACK_COOLDOWN = 0.2;
+
+    // Attack Cooldwon Getters and Setters
+    public double FireballAttackCooldowns { get { return FIREBALL_ATTACK_COOLDOWN; } set { FIREBALL_ATTACK_COOLDOWN = value; } }
 
     // Splash Variables
     private double LastSplashAttackTime { get; set; }
@@ -53,6 +70,11 @@ public class FireAttacks : MonoBehaviour
 
     private SpriteRenderer Sprite { get; set; }
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
         LastSplashAttackTime = float.MinValue;
@@ -72,8 +94,6 @@ public class FireAttacks : MonoBehaviour
         HandAttackEnemyInRangeRight = handAttackEnemyHitZoneRight.IsTouchingLayers(enemyLayer.value);
         EnemiesExist = GameObject.FindGameObjectWithTag("Enemy") != null;
 
-        if (SplashAttackEnabled && SplashAttackEnemyInRange &&
-            Time.timeAsDouble >= LastSplashAttackTime + SPLASH_ATTACK_COOLDOWN)
         if (canAttack == true)
         {
             SplashAttackEnemyInRange = splashAttackEnemyHitZone.IsTouchingLayers(enemyLayer.value);
@@ -107,12 +127,11 @@ public class FireAttacks : MonoBehaviour
             {
                 PerformFireballAttack();
             }
-        }
 
-        if (RapidFireAttackEnabled && EnemiesExist &&
-            Time.timeAsDouble >= LastRapidFireAttackTime + RAPID_FIRE_ATTACK_COOLDOWN)
-        {
-            PerformRapidFireAttack();
+            if (FireController.Instance.CanUseRapidAttack() && EnemiesExist && Time.timeAsDouble >= LastRapidFireAttackTime + RAPID_FIRE_ATTACK_COOLDOWN)
+            {
+                PerformRapidFireAttack();
+            }
         }
     }
 
@@ -155,14 +174,18 @@ public class FireAttacks : MonoBehaviour
     {
         LastFireballAttackTime = Time.timeAsDouble;
         GameObject fireballAttack = Instantiate(fireballAttackPrefab, transform, false);
+        GameObject leftFireballAttack = Instantiate(fireballAttackPrefab, transform, false);
         fireballAttack.AddComponent<FireProjectile>();
+        leftFireballAttack.AddComponent<LeftFireProjectile>();
     }
 
     public void PerformRapidFireAttack()
     {
         LastRapidFireAttackTime = Time.timeAsDouble;
         GameObject rapidFireAttack = Instantiate(fireballAttackPrefab, transform, false);
+        GameObject rapidFireAttackLeft = Instantiate(fireballAttackPrefab, transform, false);
         rapidFireAttack.AddComponent<RapidFire>();
+        rapidFireAttackLeft.AddComponent<LeftRapidFire>();
     }
 
     public IEnumerator PerformFireBurst()

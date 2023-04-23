@@ -28,6 +28,7 @@ public class FireController : MonoBehaviour
 
     // Upgrade Variables
     private Upgrades upgrades;
+    private int woodValue = 20;
 
     private void Awake()
     {
@@ -58,7 +59,7 @@ public class FireController : MonoBehaviour
         {
             PlayerStateMachine.Instance.IsInteracting = false;
             PlayerStateMachine.Instance.WoodCount--;
-            _fireHealth += 20;
+            _fireHealth += woodValue;
 
             // Play flame noise
         }
@@ -91,9 +92,24 @@ public class FireController : MonoBehaviour
         }
     }
 
-    private void SetMaxHealth(int healthIncrease)
+    public void IncreaseAttackDamage(int attackToIncrease, int damageIncrease)
+    {
+        attackToIncrease = attackToIncrease + damageIncrease;
+    }
+
+    public void SetMaxHealth(int healthIncrease)
     {
         _maxFireHealth = _maxFireHealth + healthIncrease;
+    }
+
+    public void SetWoodValue(int valueIncrease)
+    {
+        woodValue = woodValue + valueIncrease;
+    }
+
+    public void SetFireBallFireRate(double cooldown)
+    {
+        FireAttacks.Instance.FireballAttackCooldowns = cooldown;
     }
 
     public bool CanUseHandAttack()
@@ -104,5 +120,10 @@ public class FireController : MonoBehaviour
     public bool CanUseSplashAttack()
     {
         return upgrades.IsUpgradeUnlocked(Upgrades.UpgradeType.splashAttack);
+    }
+
+    public bool CanUseRapidAttack()
+    {
+        return upgrades.IsUpgradeUnlocked(Upgrades.UpgradeType.rapidAttack);
     }
 }

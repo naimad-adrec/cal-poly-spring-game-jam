@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RapidFire : MonoBehaviour
+public class LeftRapidFire : MonoBehaviour
 {
-    private int rapidFireDamage = 0;
+    private int rapidFireDamage = 2;
     private GameObject Target { get; set; }
 
     private float Rotation { get; set; }
 
-    void Start()
+    private void Start()
     {
         Target = FindNearestEnemy();
 
@@ -19,7 +19,7 @@ public class RapidFire : MonoBehaviour
         rapidFireDamage = FireAttacks.Instance.RapidFireAttack;
     }
 
-    void Update()
+    private void Update()
     {
         if (Target == null)
         {
@@ -55,7 +55,7 @@ public class RapidFire : MonoBehaviour
     {
         GameObject closestObject = null;
         float closestDistance = float.MaxValue;
-        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy Left"))
         {
             float distance = (enemy.transform.position - transform.position).sqrMagnitude;
             if (distance < closestDistance)

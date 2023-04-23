@@ -4,21 +4,22 @@ using UnityEngine;
 
 public class FireProjectile : MonoBehaviour
 {
-    private int fireballDamage = 10;
+    private int fireballDamage;
     private GameObject Target { get; set; }
 
     private float Rotation { get; set; }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         Target = FindNearestEnemy();
 
-        Rotation = Target.transform.position.x < transform.position.x ? 135.0f : 45.0f;            
+        Rotation = Target.transform.position.x < transform.position.x ? 135.0f : 45.0f;
+        fireballDamage = FireAttacks.Instance.FireballAttack;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (Target == null)
         {

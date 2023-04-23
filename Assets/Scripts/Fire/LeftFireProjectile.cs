@@ -2,24 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RapidFire : MonoBehaviour
+public class LeftFireProjectile : MonoBehaviour
 {
-    private int rapidFireDamage = 0;
+    private int fireballDamage = 10;
     private GameObject Target { get; set; }
 
     private float Rotation { get; set; }
 
-    void Start()
+    private void Start()
     {
         Target = FindNearestEnemy();
 
         Rotation = Target.transform.position.x < transform.position.x ? 135.0f : 45.0f;
-
-        transform.localScale = Vector3.one * 0.2f;
-        rapidFireDamage = FireAttacks.Instance.RapidFireAttack;
+        fireballDamage = FireAttacks.Instance.FireballAttack;
     }
 
-    void Update()
+    private void Update()
     {
         if (Target == null)
         {
@@ -34,12 +32,12 @@ public class RapidFire : MonoBehaviour
 
         Vector2 displacement = Target.transform.position - transform.position;
         float targetRotation = Mathf.Rad2Deg * Mathf.Atan2(displacement.y, displacement.x);
-        Rotation = Mathf.LerpAngle(Rotation, targetRotation, Time.deltaTime * 5);
+        Rotation = Mathf.LerpAngle(Rotation, targetRotation, Time.deltaTime * 2);
 
         transform.rotation = Quaternion.Euler(0f, 0f, Rotation + 45.0f);
 
         Vector3 moveVector = new(Mathf.Cos(Mathf.Deg2Rad * Rotation), Mathf.Sin(Mathf.Deg2Rad * Rotation));
-        transform.position += Time.deltaTime * moveVector * 5.0f;
+        transform.position += Time.deltaTime * moveVector;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -55,7 +53,7 @@ public class RapidFire : MonoBehaviour
     {
         GameObject closestObject = null;
         float closestDistance = float.MaxValue;
-        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy Left"))
         {
             float distance = (enemy.transform.position - transform.position).sqrMagnitude;
             if (distance < closestDistance)
@@ -75,6 +73,6 @@ public class RapidFire : MonoBehaviour
 
     private void ApplyDamage(GameObject enemy)
     {
-        enemy.GetComponent<EnemyLogic>().TakeDamage(rapidFireDamage);
+        enemy.GetComponent<EnemyLogic>().TakeDamage(fireballDamage);
     }
 }
