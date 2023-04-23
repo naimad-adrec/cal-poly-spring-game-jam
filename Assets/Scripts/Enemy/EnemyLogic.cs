@@ -48,11 +48,6 @@ public class EnemyLogic : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-
-    }
-
     private void Update()
     {
         // Find current target position
@@ -69,22 +64,22 @@ public class EnemyLogic : MonoBehaviour
         if (_atTarget == false)
         {
             MoveToTarget();
-
-            // Attack damage player if collision detected
         }
         else
         {
             CheckTargetChange();
-            if (currentCooldown > 0f)
+            if (RoundController.Instance.GameInProgress == true)
             {
-                Debug.Log(currentCooldown);
-                currentCooldown -= Time.deltaTime;
-            }
-            else
-            {
-                FireProjectile();
-                StartCoroutine(Attack());
-                currentCooldown = attackCooldown;
+                if (currentCooldown > 0f)
+                {
+                    currentCooldown -= Time.deltaTime;
+                }
+                else
+                {
+                    FireProjectile();
+                    StartCoroutine(Attack());
+                    currentCooldown = attackCooldown;
+                }
             }
         }
     }

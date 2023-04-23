@@ -8,6 +8,7 @@ TagManager:
   - Fire
   - Enemy
   - Projectile
+  - Wall
   layers:
   - Default
   - TransparentFX

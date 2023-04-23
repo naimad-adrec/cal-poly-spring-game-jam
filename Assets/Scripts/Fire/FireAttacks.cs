@@ -6,6 +6,9 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class FireAttacks : MonoBehaviour
 {
+    // Game Status Variables
+    private bool canAttack = true;
+
     // Attack Cooldown Variables
     [SerializeField] private const double SPLASH_ATTACK_COOLDOWN = 1.5;
     [SerializeField] private const double HAND_ATTACK_COOLDOWN = 3.0;
@@ -13,14 +16,12 @@ public class FireAttacks : MonoBehaviour
     [SerializeField] private const double RAPID_FIRE_ATTACK_COOLDOWN = 0.2;
 
     // Splash Variables
-    public bool SplashAttackEnabled { get; set; } = true;
     private double LastSplashAttackTime { get; set; }
     [SerializeField] private GameObject splashAttackPrefab;
     [SerializeField] private Collider2D splashAttackEnemyHitZone;
     private bool SplashAttackEnemyInRange { get; set; }
 
     // Hand Variables
-    public bool HandAttackEnabled { get; set; } = true;
     private double LastHandAttackTimeLeft { get; set; }
     private double LastHandAttackTimeRight { get; set; }
     [SerializeField] private GameObject handAttackPrefab;
@@ -73,29 +74,39 @@ public class FireAttacks : MonoBehaviour
 
         if (SplashAttackEnabled && SplashAttackEnemyInRange &&
             Time.timeAsDouble >= LastSplashAttackTime + SPLASH_ATTACK_COOLDOWN)
+        if (canAttack == true)
         {
-            PerformSplashAttack();
-        }
+            SplashAttackEnemyInRange = splashAttackEnemyHitZone.IsTouchingLayers(enemyLayer.value);
+            HandAttackEnemyInRangeLeft = handAttackEnemyHitZoneLeft.IsTouchingLayers(enemyLayer.value);
+            HandAttackEnemyInRangeRight = handAttackEnemyHitZoneRight.IsTouchingLayers(enemyLayer.value);
+            EnemiesExist = GameObject.FindGameObjectWithTag("Enemy") != null;
 
-        if (HandAttackEnabled)
-        {
-            if (HandAttackEnemyInRangeLeft &&
-                Time.timeAsDouble >= LastHandAttackTimeLeft + HAND_ATTACK_COOLDOWN)
+            if (FireController.Instance.CanUseSplashAttack() && SplashAttackEnemyInRange &&
+                Time.timeAsDouble >= LastSplashAttackTime + SPLASH_ATTACK_COOLDOWN)
             {
-                StartCoroutine(PerformHandAttack(false));
+                PerformSplashAttack();
             }
 
-            if (HandAttackEnemyInRangeRight &&
-                Time.timeAsDouble >= LastHandAttackTimeRight + HAND_ATTACK_COOLDOWN)
+            if (FireController.Instance.CanUseHandAttack())
             {
-                StartCoroutine(PerformHandAttack(true));
-            }
-        }
+                if (HandAttackEnemyInRangeLeft &&
+                    Time.timeAsDouble >= LastHandAttackTimeLeft + HAND_ATTACK_COOLDOWN)
+                {
+                    StartCoroutine(PerformHandAttack(false));
+                }
 
-        if (FireballAttackEnabled && EnemiesExist &&
-            Time.timeAsDouble >= LastFireballAttackTime + FIREBALL_ATTACK_COOLDOWN)
-        {
-            PerformFireballAttack();
+                if (HandAttackEnemyInRangeRight &&
+                    Time.timeAsDouble >= LastHandAttackTimeRight + HAND_ATTACK_COOLDOWN)
+                {
+                    StartCoroutine(PerformHandAttack(true));
+                }
+            }
+
+            if (FireballAttackEnabled && EnemiesExist &&
+                Time.timeAsDouble >= LastFireballAttackTime + FIREBALL_ATTACK_COOLDOWN)
+            {
+                PerformFireballAttack();
+            }
         }
 
         if (RapidFireAttackEnabled && EnemiesExist &&
@@ -103,7 +114,6 @@ public class FireAttacks : MonoBehaviour
         {
             PerformRapidFireAttack();
         }
-
     }
 
     public void PerformSplashAttack()
@@ -259,5 +269,10 @@ public class FireAttacks : MonoBehaviour
         IsPerformingFireBurst = false;
 
         Sprite.enabled = true;
+    }
+
+    public void DisableAttack()
+    {
+        canAttack = false;
     }
 }
