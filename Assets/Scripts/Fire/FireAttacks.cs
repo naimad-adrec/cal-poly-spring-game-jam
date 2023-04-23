@@ -7,6 +7,7 @@ public class FireAttacks : MonoBehaviour
 
     private const double SPLASH_ATTACK_COOLDOWN = 1.5;
     private const double HAND_ATTACK_COOLDOWN = 3.0;
+    private const double FIREBALL_ATTACK_COOLDOWN = 1.0;
 
     public bool SplashAttackEnabled { get; set; } = true;
     private double LastSplashAttackTime { get; set; }
@@ -23,6 +24,11 @@ public class FireAttacks : MonoBehaviour
     [SerializeField] private Collider2D handAttackEnemyHitZoneRight;
     private bool HandAttackEnemyInRangeLeft { get; set; }
     private bool HandAttackEnemyInRangeRight { get; set; }
+
+    public bool FireballAttackEnabled { get; set; } = true;
+    private double LastFireballAttackTime { get; set; }
+    [SerializeField] private GameObject fireballAttackPrefab;
+    private bool EnemiesExist { get; set; }
 
     [SerializeField] private LayerMask enemyLayer;
 
@@ -41,6 +47,7 @@ public class FireAttacks : MonoBehaviour
         SplashAttackEnemyInRange = splashAttackEnemyHitZone.IsTouchingLayers(enemyLayer.value);
         HandAttackEnemyInRangeLeft = handAttackEnemyHitZoneLeft.IsTouchingLayers(enemyLayer.value);
         HandAttackEnemyInRangeRight = handAttackEnemyHitZoneRight.IsTouchingLayers(enemyLayer.value);
+        EnemiesExist = GameObject.FindGameObjectWithTag("Enemy") != null;
 
         if (SplashAttackEnabled && SplashAttackEnemyInRange &&
             Time.timeAsDouble >= LastSplashAttackTime + SPLASH_ATTACK_COOLDOWN)
@@ -63,7 +70,12 @@ public class FireAttacks : MonoBehaviour
             }
         }
 
-        
+        if (FireballAttackEnabled && EnemiesExist &&
+            Time.timeAsDouble >= LastFireballAttackTime + FIREBALL_ATTACK_COOLDOWN)
+        {
+            PerformFireballAttack();
+        }
+
     }
 
     public void PerformSplashAttack()
@@ -99,5 +111,12 @@ public class FireAttacks : MonoBehaviour
         else         
             explosion.transform.position += new Vector3(-2.0f, 0.0f);
         Destroy(explosion, 0.47f);
+    }
+
+    public void PerformFireballAttack()
+    {
+        LastFireballAttackTime = Time.timeAsDouble;
+        GameObject fireballAttack = Instantiate(fireballAttackPrefab, transform, false);
+        fireballAttack.AddComponent<FireProjectile>();
     }
 }
