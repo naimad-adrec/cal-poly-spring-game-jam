@@ -59,17 +59,23 @@ public class RoundController : MonoBehaviour
                 {
                     roundInProgress = true;
                     StartNewRound();
-                    roundRestTimer = leftSpawn.SpawnTime;
+                    roundRestTimer = 11.0f;
                 }
             }
             else
             {
                 if (LiveEnemies == 0)
                 {
-                    roundInProgress = false;
+                    StartCoroutine(EndRoundWithDelay());
                 }
             }
         }
+    }
+
+    private IEnumerator EndRoundWithDelay()
+    {
+        yield return new WaitForSeconds(2.0f);
+        roundInProgress = false;
     }
 
     private void StartNewRound()
