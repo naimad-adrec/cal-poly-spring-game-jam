@@ -89,7 +89,16 @@ public class RoundController : MonoBehaviour
     public void GameOver()
     {
         Debug.Log("GameOver");
-        _gameInProgress = false;
-        _finalRoundCount = _roundCount;
+        if (FireController.Instance.CanUseFireFlash() == true)
+        {
+            FireController.Instance.FireHealth = FireController.Instance.MaxFireHealth;
+            FireAttacks.Instance.StartCoroutine(FireAttacks.Instance.PerformFireBurst());
+            FireController.Instance.Upgrades.RemoveUpgrade(Upgrades.UpgradeType.fireburst);
+        }
+        else
+        {
+            _gameInProgress = false;
+            _finalRoundCount = _roundCount;
+        }
     }
 }

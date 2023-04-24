@@ -32,6 +32,8 @@ public class FireController : MonoBehaviour
     private int woodValue = 20;
     private bool _dropRateIncreased = false;
 
+    public Upgrades Upgrades { get { return upgrades; } set { upgrades = value; } }
+
     // Upgrade Getters and Setters
     public bool DropRateIncreased { get { return _dropRateIncreased; }  private set { } }
 
@@ -48,14 +50,7 @@ public class FireController : MonoBehaviour
 
     private void Update()
     {
-        if (_isBurning == true)
-        {
 
-        }
-        else
-        {
-
-        }
     }
 
     public void TakeResources()
@@ -142,6 +137,11 @@ public class FireController : MonoBehaviour
     public bool CanUseRapidAttack()
     {
         return upgrades.IsUpgradeUnlocked(Upgrades.UpgradeType.rapidAttack);
+    }
+
+    public bool CanUseFireFlash()
+    {
+        return upgrades.IsUpgradeUnlocked(Upgrades.UpgradeType.fireburst);
     }
 
     public void DropRateIncrease()
