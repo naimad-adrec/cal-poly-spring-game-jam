@@ -7605,7 +7605,7 @@ MonoBehaviour:
   updraftPrefab: {fileID: 1407303529245236996, guid: d78d99ff754437e418458d860925d768, type: 3}
   flashPrefab: {fileID: 8750267668388306198, guid: 091f668e38ebd9c4dacd047b3bce7947, type: 3}
   explosionParticlesPrefab: {fileID: 8592517325101708165, guid: fdc87d549235be641b56e6e49892ac13, type: 3}
-  impactFramesCollection: {fileID: 8750267668388306197, guid: 091f668e38ebd9c4dacd047b3bce7947, type: 3}
+  impactFramesCollection: {fileID: 1415994390}
   playerCamera: {fileID: 519420033}
   audioSource: {fileID: 877740887}
   fireBurstSound: {fileID: 8300000, guid: 5f37daf366abf8f48880013074316a96, type: 3}

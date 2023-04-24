@@ -20,8 +20,6 @@ public class UISkillTree : MonoBehaviour
     [SerializeField] private Button fireHealthTwo;
     [SerializeField] private Button fireburstUnlock;
 
-    private Upgrades upgrades;
-
     private void Start()
     {
 
@@ -31,19 +29,19 @@ public class UISkillTree : MonoBehaviour
     {
         if (rapidUnlock.GetComponent<UpgradeButton>().Purchased == true)
         {
-            upgrades.UnlockUpgrade(Upgrades.UpgradeType.rapidAttack);
+            FireController.Instance.Upgrades.UnlockUpgrade(Upgrades.UpgradeType.rapidAttack);
         }
         if(handUnlock.GetComponent<UpgradeButton>().Purchased == true)
         {
-            upgrades.UnlockUpgrade(Upgrades.UpgradeType.handAttack);
+            FireController.Instance.Upgrades.UnlockUpgrade(Upgrades.UpgradeType.handAttack);
         }
         if (splashUnlock.GetComponent<UpgradeButton>().Purchased == true)
         {
-            upgrades.UnlockUpgrade(Upgrades.UpgradeType.splashAttack);
+            FireController.Instance.Upgrades.UnlockUpgrade(Upgrades.UpgradeType.splashAttack);
         }
         if (fireburstUnlock.GetComponent<UpgradeButton>().Purchased == true)
         {
-            upgrades.UnlockUpgrade(Upgrades.UpgradeType.fireburst);
+            FireController.Instance.Upgrades.UnlockUpgrade(Upgrades.UpgradeType.fireburst);
         }
     }
 }

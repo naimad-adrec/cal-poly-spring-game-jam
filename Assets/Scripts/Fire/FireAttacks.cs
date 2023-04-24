@@ -26,7 +26,7 @@ public class FireAttacks : MonoBehaviour
     // Attack Cooldown Variables
     [SerializeField] private const double SPLASH_ATTACK_COOLDOWN = 1.5;
     [SerializeField] private const double HAND_ATTACK_COOLDOWN = 3.0;
-    [SerializeField] private int FIREBALL_ATTACK_COOLDOWN = 10;
+    [SerializeField] private int FIREBALL_ATTACK_COOLDOWN = 6;
     [SerializeField] private const double RAPID_FIRE_ATTACK_COOLDOWN = 0.2;
 
     // Attack Cooldwon Getters and Setters
@@ -107,14 +107,11 @@ public class FireAttacks : MonoBehaviour
         SplashAttackEnemyInRange = splashAttackEnemyHitZone.IsTouchingLayers(enemyLayer.value);
         HandAttackEnemyInRangeLeft = handAttackEnemyHitZoneLeft.IsTouchingLayers(enemyLayer.value);
         HandAttackEnemyInRangeRight = handAttackEnemyHitZoneRight.IsTouchingLayers(enemyLayer.value);
-        EnemiesExist = GameObject.FindGameObjectWithTag("Enemy") != null;
+        EnemiesExist = GameObject.FindGameObjectWithTag("Enemy") != null ||
+            GameObject.FindGameObjectWithTag("Enemy Left") != null;
 
         if (canAttack == true)
         {
-            SplashAttackEnemyInRange = splashAttackEnemyHitZone.IsTouchingLayers(enemyLayer.value);
-            HandAttackEnemyInRangeLeft = handAttackEnemyHitZoneLeft.IsTouchingLayers(enemyLayer.value);
-            HandAttackEnemyInRangeRight = handAttackEnemyHitZoneRight.IsTouchingLayers(enemyLayer.value);
-            EnemiesExist = GameObject.FindGameObjectWithTag("Enemy") != null;
 
             if (FireController.Instance.CanUseSplashAttack() && SplashAttackEnemyInRange &&
                 Time.timeAsDouble >= LastSplashAttackTime + SPLASH_ATTACK_COOLDOWN)

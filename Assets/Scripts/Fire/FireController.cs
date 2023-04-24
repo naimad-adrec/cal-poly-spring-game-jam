@@ -61,7 +61,7 @@ public class FireController : MonoBehaviour
         {
             PlayerStateMachine.Instance.IsInteracting = false;
             PlayerStateMachine.Instance.WoodCount--;
-            _fireHealth += woodValue;
+            _fireHealth = Mathf.Min(_fireHealth + woodValue, _maxFireHealth);
 
             // Play flame noise
             PlayerAudioController audioController = PlayerStateMachine.Instance
@@ -111,6 +111,7 @@ public class FireController : MonoBehaviour
     public void SetMaxHealth(int healthIncrease)
     {
         _maxFireHealth = _maxFireHealth + healthIncrease;
+        _fireHealth += healthIncrease;
     }
 
     public void SetWoodValue(int valueIncrease)
