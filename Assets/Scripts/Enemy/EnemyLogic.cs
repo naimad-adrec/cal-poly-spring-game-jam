@@ -49,6 +49,9 @@ public class EnemyLogic : MonoBehaviour
         {
             targetPosition = RightTargetBehavior.Instance.transform.position;
         }
+
+        int roundCount = RoundController.Instance.RoundCount;
+        Health = roundCount * roundCount * 2 + 30;
     }
 
     private void Update()

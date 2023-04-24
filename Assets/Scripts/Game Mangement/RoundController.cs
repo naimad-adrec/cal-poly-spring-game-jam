@@ -17,7 +17,6 @@ public class RoundController : MonoBehaviour
     private bool roundInProgress = false;
     private int _roundCount = 0;
     private int _finalRoundCount;
-    private int[] _roundMaxArray = new int[7] {6, 8, 10, 16, 20, 26, 30};
     private int _currentRoundMax;
     private float roundRestTimer = 11f;
 
@@ -41,7 +40,7 @@ public class RoundController : MonoBehaviour
         Instance = this;
 
         _roundCount = 0;
-        _currentRoundMax = _roundMaxArray[0];
+        _currentRoundMax = 6;
         leftSpawn.RoundMax = _currentRoundMax;
         rightSpawn.RoundMax = _currentRoundMax;
     }
@@ -76,11 +75,11 @@ public class RoundController : MonoBehaviour
     private void StartNewRound()
     {
         _roundCount++;
-        _currentRoundMax = _roundMaxArray[_roundCount - 1];
+        _currentRoundMax = _roundCount * 2 + 4;
         leftSpawn.RoundMax = _currentRoundMax;
         rightSpawn.RoundMax = _currentRoundMax;
         spawnTrees.Instance.SpawnTrees();
-        if (_roundCount % 2 == 1 && leftSpawn.SpawnTime > 5)
+        if (_roundCount % 2 == 1 && leftSpawn.SpawnTime > 2)
         {
             leftSpawn.SpawnTime -= 1f;
             rightSpawn.SpawnTime -= 1f;
