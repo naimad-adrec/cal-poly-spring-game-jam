@@ -84,9 +84,9 @@ public class FireAttacks : MonoBehaviour
         Instance = this;
 
         _fireballAttack = 10;
-        _rapidFireAttack = 5;
+        _rapidFireAttack = 1;
         _splashAttack = 50;
-        _handAttack = 50;
+        _handAttack = 40;
 
     }
 

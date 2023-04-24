@@ -51,7 +51,7 @@ public class EnemyLogic : MonoBehaviour
         }
 
         int roundCount = RoundController.Instance.RoundCount;
-        Health = roundCount * roundCount * 2 + 30;
+        Health = roundCount * roundCount * 3 + 30;
     }
 
     private void Update()
