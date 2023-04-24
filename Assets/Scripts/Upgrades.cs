@@ -18,6 +18,11 @@ public class Upgrades
         unlockedUpgrades.Add(upgrade);
     }
 
+    public void RemoveUpgrade(UpgradeType upgrade)
+    {
+        unlockedUpgrades.Remove(upgrade);
+    }
+
     public bool IsUpgradeUnlocked(UpgradeType upgrade)
     {
         return unlockedUpgrades.Contains(upgrade);
