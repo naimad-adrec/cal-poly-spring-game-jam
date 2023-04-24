@@ -322,6 +322,7 @@ public class FireAttacks : MonoBehaviour
 
         // Restore fire
         IsPerformingFireBurst = false;
+        canAttack = true;
         Sprite.enabled = true;
         audioSource.Play();
     }
@@ -329,5 +330,11 @@ public class FireAttacks : MonoBehaviour
     public void DisableAttack()
     {
         canAttack = false;
+    }
+
+    public void KillSprite()
+    {
+        Sprite.enabled = false;
+        audioSource.Stop();
     }
 }

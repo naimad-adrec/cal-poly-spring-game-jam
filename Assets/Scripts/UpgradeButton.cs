@@ -19,17 +19,8 @@ public class UpgradeButton : MonoBehaviour
 
     private void Update()
     {
-        if (_purchased == false)
-        {
-            if (PlayerStateMachine.Instance.CoalCount >= coalCost)
-            {
-                currentbutton.interactable = true;
-            }
-            else
-            {
-                currentbutton.interactable = false;
-            }
-        }
+        currentbutton.interactable = _purchased == false &&
+            PlayerStateMachine.Instance.CoalCount >= coalCost;
     }
 
     public void SetPurchaseToTrue()

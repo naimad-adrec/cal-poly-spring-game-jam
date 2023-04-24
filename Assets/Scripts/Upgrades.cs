@@ -6,21 +6,23 @@ public class Upgrades
 {
     public enum UpgradeType { handAttack, splashAttack, rapidAttack, fireBallAttackRate1, fireBallAttackRate2, fireHealth1, fireHealth2, woodValue, fireballDamage, rapidDamage, woodDrop, fireburst}
 
-    private List<UpgradeType> unlockedUpgrades;
+    private HashSet<UpgradeType> unlockedUpgrades;
 
     public Upgrades ()
     {
-        unlockedUpgrades = new List<UpgradeType>();
+        unlockedUpgrades = new HashSet<UpgradeType>();
     }
 
     public void UnlockUpgrade(UpgradeType upgrade)
     {
-        unlockedUpgrades.Add(upgrade);
+        if (!unlockedUpgrades.Contains(upgrade))
+            unlockedUpgrades.Add(upgrade);
     }
 
     public void RemoveUpgrade(UpgradeType upgrade)
     {
-        unlockedUpgrades.Remove(upgrade);
+        if (unlockedUpgrades.Contains(upgrade))
+            unlockedUpgrades.Remove(upgrade);
     }
 
     public bool IsUpgradeUnlocked(UpgradeType upgrade)
