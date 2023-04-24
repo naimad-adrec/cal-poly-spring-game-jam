@@ -315,6 +315,10 @@ public class FireAttacks : MonoBehaviour
         {
             enemy.GetComponent<EnemyLogic>().TakeDamage(1000);
         }
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy Left"))
+        {
+            enemy.GetComponent<EnemyLogic>().TakeDamage(1000);
+        }
 
         // Restore fire
         IsPerformingFireBurst = false;
