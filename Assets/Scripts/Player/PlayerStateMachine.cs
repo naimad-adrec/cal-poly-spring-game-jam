@@ -154,6 +154,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     private IEnumerator DisableHitbox()
     {
+        _animator.SetTrigger("IsHit");
         _rb.simulated = false;
         yield return new WaitForSeconds(1f);
         _rb.simulated = true;

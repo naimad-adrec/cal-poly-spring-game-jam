@@ -20,6 +20,7 @@ public class FireController : MonoBehaviour
     private bool _isBurning = true;
 
     // Health Getters and Setters
+    public int MaxFireHealth { get { return _maxFireHealth; } set { _maxFireHealth = value; } }
     public int FireHealth { get { return _fireHealth; } set { _fireHealth = value; } }
     public bool IsBurning { get { return _isBurning; } set { _isBurning = value; } }
 

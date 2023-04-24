@@ -13,11 +13,16 @@ public class TreeSpawnPoint : MonoBehaviour
     {
         Instantiate(tree, transform.position, transform.rotation);
     }
+
     private void Update()
     {
         if (transform.childCount == 0)
         {
             isPlanted = false;
+        }
+        else
+        {
+            isPlanted = true;
         }
     }
 
