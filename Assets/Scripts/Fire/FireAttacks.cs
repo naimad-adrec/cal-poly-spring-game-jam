@@ -86,8 +86,7 @@ public class FireAttacks : MonoBehaviour
         _fireballAttack = 10;
         _rapidFireAttack = 1;
         _splashAttack = 50;
-        _handAttack = 40;
-
+        _handAttack = 25;
     }
 
     private void Start()

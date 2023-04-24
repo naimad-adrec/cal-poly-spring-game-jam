@@ -35,13 +35,9 @@ public class TreeController : MonoBehaviour
         if (FireController.Instance.DropRateIncreased == false)
         {
             Instantiate(wood, transform.position, transform.rotation);
-            Instantiate(wood, transform.position, transform.rotation);
-            Instantiate(wood, transform.position, transform.rotation);
         }
         else
         {
-            Instantiate(wood, transform.position, transform.rotation);
-            Instantiate(wood, transform.position, transform.rotation);
             Instantiate(wood, transform.position, transform.rotation);
             Instantiate(wood, transform.position, transform.rotation);
             Instantiate(wood, transform.position, transform.rotation);

@@ -89,7 +89,17 @@ public class FireController : MonoBehaviour
         {
             if (_fireHealth <= 0)
             {
-                FireDies();
+
+                if (CanUseFireFlash() == false)
+                {
+                    FireDies();
+                }
+                else
+                {
+                    _fireHealth = _maxFireHealth;
+                    FireAttacks.Instance.StartCoroutine(FireAttacks.Instance.PerformFireBurst());
+                    upgrades.RemoveUpgrade(Upgrades.UpgradeType.fireburst);
+                }
             }
             else
             {

@@ -129,7 +129,7 @@ public class EnemyLogic : MonoBehaviour
         // Play death Animation
         RoundController.Instance.LiveEnemies--;
 
-        if (Random.Range(0.0f, 1.0f) > 0.5f)
+        if (Random.Range(0, 2) == 0)
         {
             Instantiate(coalPrefab, transform.position, transform.rotation);
         }
