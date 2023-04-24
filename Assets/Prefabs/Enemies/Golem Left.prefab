@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7678990359849206516}
   m_Layer: 6
   m_Name: Golem Left
-  m_TagString: Enemy
+  m_TagString: Enemy Left
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -160,3 +160,4 @@ MonoBehaviour:
   isLeft: 1
   moveSpeed: 1
   _waterProjectile: {fileID: 3197580302945035733, guid: b7982546d351244ea9c44f277867b5a0, type: 3}
+  coalPrefab: {fileID: 2741732716839108867, guid: 077df3e821b856d458abcfcaacfcf5b2, type: 3}

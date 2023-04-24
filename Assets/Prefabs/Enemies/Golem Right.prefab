@@ -160,3 +160,4 @@ MonoBehaviour:
   isLeft: 0
   moveSpeed: 1
   _waterProjectile: {fileID: 3197580302945035733, guid: b7982546d351244ea9c44f277867b5a0, type: 3}
+  coalPrefab: {fileID: 2741732716839108867, guid: 077df3e821b856d458abcfcaacfcf5b2, type: 3}

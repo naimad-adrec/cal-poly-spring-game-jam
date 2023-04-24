@@ -20,6 +20,7 @@ public class FireController : MonoBehaviour
     private bool _isBurning = true;
 
     // Health Getters and Setters
+    public int MaxFireHealth { get { return _maxFireHealth; } set { _maxFireHealth = value; } }
     public int FireHealth { get { return _fireHealth; } set { _fireHealth = value; } }
     public bool IsBurning { get { return _isBurning; } set { _isBurning = value; } }
 
@@ -28,6 +29,13 @@ public class FireController : MonoBehaviour
 
     // Upgrade Variables
     private Upgrades upgrades;
+    private int woodValue = 20;
+    private bool _dropRateIncreased = false;
+
+    public Upgrades Upgrades { get { return upgrades; } set { upgrades = value; } }
+
+    // Upgrade Getters and Setters
+    public bool DropRateIncreased { get { return _dropRateIncreased; }  private set { } }
 
     private void Awake()
     {
@@ -42,25 +50,24 @@ public class FireController : MonoBehaviour
 
     private void Update()
     {
-        if (_isBurning == true)
-        {
 
-        }
-        else
-        {
-
-        }
     }
 
     public void TakeResources()
     {
+        PlayerStateMachine.Instance.Animator.SetInteger("Tool", 1);
+        PlayerStateMachine.Instance.Animator.SetTrigger("Interact");
         if (PlayerStateMachine.Instance.WoodCount >= 1)
         {
             PlayerStateMachine.Instance.IsInteracting = false;
             PlayerStateMachine.Instance.WoodCount--;
-            _fireHealth += 20;
+            _fireHealth = Mathf.Min(_fireHealth + woodValue, _maxFireHealth);
 
             // Play flame noise
+            PlayerAudioController audioController = PlayerStateMachine.Instance
+                .gameObject.transform.GetChild(0).GetComponent<PlayerAudioController>();
+            audioController.PlayTreeBreakSound();
+            audioController.PlayFlameSound();
         }
         else
         {
@@ -91,9 +98,31 @@ public class FireController : MonoBehaviour
         }
     }
 
-    private void SetMaxHealth(int healthIncrease)
+    public void IncreaseAttackDamage(int damageIncrease)
+    {
+        FireAttacks.Instance.FireballAttack = FireAttacks.Instance.FireballAttack + damageIncrease;
+    }
+
+    public void IncreaseRapidDamage(int damageIncrease)
+    {
+        FireAttacks.Instance.RapidFireAttack = FireAttacks.Instance.RapidFireAttack + damageIncrease;
+    }
+
+    public void SetMaxHealth(int healthIncrease)
     {
         _maxFireHealth = _maxFireHealth + healthIncrease;
+        _fireHealth += healthIncrease;
+    }
+
+    public void SetWoodValue(int valueIncrease)
+    {
+        woodValue = woodValue + valueIncrease;
+    }
+
+    public void SetFireBallFireRate(int cooldown)
+    {
+        Debug.Log("I was pressed");
+        FireAttacks.Instance.FireballAttackCooldowns = cooldown;
     }
 
     public bool CanUseHandAttack()
@@ -104,5 +133,20 @@ public class FireController : MonoBehaviour
     public bool CanUseSplashAttack()
     {
         return upgrades.IsUpgradeUnlocked(Upgrades.UpgradeType.splashAttack);
+    }
+
+    public bool CanUseRapidAttack()
+    {
+        return upgrades.IsUpgradeUnlocked(Upgrades.UpgradeType.rapidAttack);
+    }
+
+    public bool CanUseFireFlash()
+    {
+        return upgrades.IsUpgradeUnlocked(Upgrades.UpgradeType.fireburst);
+    }
+
+    public void DropRateIncrease()
+    {
+        _dropRateIncreased = true;
     }
 }

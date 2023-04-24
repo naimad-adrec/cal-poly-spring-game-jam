@@ -11,6 +11,8 @@ public class PlayerMovingState : PlayerBaseState
     public override void EnterState(PlayerStateMachine player)
     {
         player.CanDodge = true;
+        player.Animator.SetBool("IsMoving", true);
+        ChangeCurrentAnimation(player);
     }
 
     public override void UpdateState(PlayerStateMachine player)
@@ -18,6 +20,7 @@ public class PlayerMovingState : PlayerBaseState
         if (player.DirX != 0f && player.IsInteracting == false && player.IsDodging == false)
         {
             ApplyPlayerMovement(player);
+            ChangeCurrentAnimation(player);
         }
         else if (player.DirX == 0f && player.IsInteracting == false && player.IsDodging == false)
         {
@@ -46,6 +49,13 @@ public class PlayerMovingState : PlayerBaseState
 
     private void ChangeCurrentAnimation(PlayerStateMachine player)
     {
-
+        if(player.DirX < 0)
+        {
+            player.Sp.flipX = true;
+        }
+        else if (player.DirX > 0)
+        {
+            player.Sp.flipX = false;
+        }
     }
 }

@@ -17,12 +17,12 @@ public class RoundController : MonoBehaviour
     private bool roundInProgress = false;
     private int _roundCount = 0;
     private int _finalRoundCount;
-    private int[] _roundMaxArray = new int[7] {6, 8, 10, 16, 20, 26, 30};
     private int _currentRoundMax;
     private float roundRestTimer = 11f;
 
     // Round Getters and Setters
     public int RoundCount { get { return _roundCount; } private set { } }
+    public bool RoundInProgress { get { return roundInProgress; } private set { } }
 
     // Enemy Variables
     private int _liveEnemies = 0;
@@ -40,7 +40,7 @@ public class RoundController : MonoBehaviour
         Instance = this;
 
         _roundCount = 0;
-        _currentRoundMax = _roundMaxArray[0];
+        _currentRoundMax = 6;
         leftSpawn.RoundMax = _currentRoundMax;
         rightSpawn.RoundMax = _currentRoundMax;
     }
@@ -59,26 +59,33 @@ public class RoundController : MonoBehaviour
                 {
                     roundInProgress = true;
                     StartNewRound();
-                    roundRestTimer = leftSpawn.SpawnTime;
+                    roundRestTimer = 11.0f;
                 }
             }
             else
             {
                 if (LiveEnemies == 0)
                 {
-                    roundInProgress = false;
+                    StartCoroutine(EndRoundWithDelay());
                 }
             }
         }
     }
 
+    private IEnumerator EndRoundWithDelay()
+    {
+        yield return new WaitForSeconds(2.0f);
+        roundInProgress = false;
+    }
+
     private void StartNewRound()
     {
         _roundCount++;
-        _currentRoundMax = _roundMaxArray[_roundCount - 1];
+        _currentRoundMax = _roundCount * 2 + 4;
         leftSpawn.RoundMax = _currentRoundMax;
         rightSpawn.RoundMax = _currentRoundMax;
-        if (_roundCount % 2 == 1 && leftSpawn.SpawnTime > 5)
+        spawnTrees.Instance.SpawnTrees();
+        if (_roundCount % 2 == 1 && leftSpawn.SpawnTime > 2)
         {
             leftSpawn.SpawnTime -= 1f;
             rightSpawn.SpawnTime -= 1f;
@@ -88,7 +95,16 @@ public class RoundController : MonoBehaviour
     public void GameOver()
     {
         Debug.Log("GameOver");
-        _gameInProgress = false;
-        _finalRoundCount = _roundCount;
+        if (FireController.Instance.CanUseFireFlash() == true)
+        {
+            FireController.Instance.FireHealth = FireController.Instance.MaxFireHealth;
+            FireAttacks.Instance.StartCoroutine(FireAttacks.Instance.PerformFireBurst());
+            FireController.Instance.Upgrades.RemoveUpgrade(Upgrades.UpgradeType.fireburst);
+        }
+        else
+        {
+            _gameInProgress = false;
+            _finalRoundCount = _roundCount;
+        }
     }
 }
