@@ -83,7 +83,9 @@ public class RoundController : MonoBehaviour
         _roundCount++;
         _currentRoundMax = _roundCount * 2 + 4;
         leftSpawn.RoundMax = _currentRoundMax;
+        leftSpawn.ResetSpawnedEnemies();
         rightSpawn.RoundMax = _currentRoundMax;
+        rightSpawn.ResetSpawnedEnemies();
         spawnTrees.Instance.SpawnTrees();
         if (_roundCount % 2 == 1 && leftSpawn.SpawnTime > 2)
         {
@@ -105,6 +107,7 @@ public class RoundController : MonoBehaviour
         {
             _gameInProgress = false;
             _finalRoundCount = _roundCount;
+            FireAttacks.Instance.KillSprite();
         }
     }
 }

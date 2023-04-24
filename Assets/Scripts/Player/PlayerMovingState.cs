@@ -1,7 +1,5 @@
 using System.Collections;
-using UnityEditor.Tilemaps;
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class PlayerMovingState : PlayerBaseState
 {

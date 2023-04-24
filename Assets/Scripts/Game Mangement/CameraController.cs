@@ -20,7 +20,7 @@ public class CameraController : MonoBehaviour
     private void Update()
     {
         ActualPosition = new Vector3(PlayerStateMachine.Instance.transform.position.x, OriginalPosition.y, OriginalPosition.z);
-        transform.position = ActualPosition + new Vector3(Random.Range(-0.1f, 0.1f), Random.Range(-0.1f, 0.1f), 0f) * ShakeFactor;
+        transform.position = ActualPosition + new Vector3(Random.Range(-0.1f, 0.1f), Random.Range(-0.1f, 0.1f), 0f) * ShakeFactor * 2.0f;
         if (ShakeFactor > 0f)
             ShakeFactor -= Time.deltaTime;
         else

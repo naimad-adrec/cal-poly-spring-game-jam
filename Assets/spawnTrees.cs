@@ -13,6 +13,7 @@ public class spawnTrees : MonoBehaviour
 
     public void SpawnTrees()
     {
-        transform.GetComponentInChildren<TreeSpawnPoint>().SpawnTree();
+        foreach (TreeSpawnPoint spawnPoint in transform.GetComponentsInChildren<TreeSpawnPoint>())
+            spawnPoint.SpawnTree();
     }
 }
