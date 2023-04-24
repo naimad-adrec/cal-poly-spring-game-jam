@@ -132,10 +132,6 @@ public class PlayerStateMachine : MonoBehaviour
             {
                 WoodCount -= 1;
             }
-            if (CoalCount > 0)
-            {
-                CoalCount -= 1;
-            }
             StartCoroutine(DisableHitbox());
         }
     }

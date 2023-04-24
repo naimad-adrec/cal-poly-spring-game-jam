@@ -141,4 +141,16 @@ public class EnemyLogic : MonoBehaviour
         yield return new WaitForSeconds(.5f);
         _anim.SetBool("canAttack", false);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Attack Range"))
+        {
+            _atTarget = true;
+        }
+        else
+        {
+            _atTarget = false;
+        }
+    }
 }

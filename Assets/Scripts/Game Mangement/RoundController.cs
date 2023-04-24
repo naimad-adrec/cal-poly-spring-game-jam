@@ -79,6 +79,7 @@ public class RoundController : MonoBehaviour
         _currentRoundMax = _roundMaxArray[_roundCount - 1];
         leftSpawn.RoundMax = _currentRoundMax;
         rightSpawn.RoundMax = _currentRoundMax;
+        spawnTrees.Instance.SpawnTrees();
         if (_roundCount % 2 == 1 && leftSpawn.SpawnTime > 5)
         {
             leftSpawn.SpawnTime -= 1f;
