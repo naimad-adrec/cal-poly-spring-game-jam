@@ -17,8 +17,4 @@ public class TitleScript : MonoBehaviour
         Application.Quit();
     }
 
-    public void SoundPlay()
-    {
-        Audio.Play();
-    }
 }
