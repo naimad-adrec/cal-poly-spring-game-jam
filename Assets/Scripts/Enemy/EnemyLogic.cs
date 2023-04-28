@@ -30,6 +30,7 @@ public class EnemyLogic : MonoBehaviour
 
     // Health Variables
     private int _health = 100;
+    private bool _isDead = false;
 
     // Health Getters and Setters
     public int Health { get { return _health; } set { _health = value; } }
@@ -126,8 +127,10 @@ public class EnemyLogic : MonoBehaviour
 
     private void Die()
     {
-        // Play death Animation
+        if (_isDead) return;
+        _isDead = true;
         RoundController.Instance.LiveEnemies--;
+        // Play death Animation
 
         if (Random.Range(0, 2) == 0)
         {

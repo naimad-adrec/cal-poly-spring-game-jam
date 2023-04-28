@@ -49,4 +49,9 @@ public class SpawnPoint : MonoBehaviour
             currentSpawnTime = _spawnTime;
         }
     }
+
+    public void ResetSpawnedEnemies()
+    {
+        spawnedEnemies = 0;
+    }
 }

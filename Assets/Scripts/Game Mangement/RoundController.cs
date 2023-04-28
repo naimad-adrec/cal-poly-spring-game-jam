@@ -29,6 +29,8 @@ public class RoundController : MonoBehaviour
 
     // Enemy Getters and Setters
     public int LiveEnemies { get { return _liveEnemies; } set { _liveEnemies = value; }}
+
+    private double tempLastLogTime = 0.0;
    
 
     // Spawn Point Variables
@@ -47,6 +49,11 @@ public class RoundController : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeAsDouble > tempLastLogTime + 1.0)
+        {
+            Debug.Log($"Game in progress: {_gameInProgress}, Round in progress: {roundInProgress}, Live enemies: {LiveEnemies}");
+            tempLastLogTime = Time.timeAsDouble;
+        }
         if (_gameInProgress)
         {
             if (roundInProgress == false)
@@ -57,14 +64,13 @@ public class RoundController : MonoBehaviour
                 }
                 else
                 {
-                    roundInProgress = true;
                     StartNewRound();
                     roundRestTimer = 11.0f;
                 }
             }
             else
             {
-                if (LiveEnemies == 0)
+                if (LiveEnemies <= 0)
                 {
                     StartCoroutine(EndRoundWithDelay());
                 }
@@ -76,15 +82,21 @@ public class RoundController : MonoBehaviour
     {
         yield return new WaitForSeconds(2.0f);
         roundInProgress = false;
+        LiveEnemies = 0;
     }
 
     private void StartNewRound()
     {
+        Debug.Log("Starting new round");
+        roundInProgress = true;
         _roundCount++;
-        _currentRoundMax = _roundCount * 2 + 4;
+        _currentRoundMax = _roundCount * 2 + 2;
         leftSpawn.RoundMax = _currentRoundMax;
+        leftSpawn.ResetSpawnedEnemies();
         rightSpawn.RoundMax = _currentRoundMax;
-        spawnTrees.Instance.SpawnTrees();
+        rightSpawn.ResetSpawnedEnemies();
+        if (_roundCount > 1)
+            spawnTrees.Instance.SpawnTrees();
         if (_roundCount % 2 == 1 && leftSpawn.SpawnTime > 2)
         {
             leftSpawn.SpawnTime -= 1f;
@@ -96,5 +108,6 @@ public class RoundController : MonoBehaviour
     {
         _gameInProgress = false;
         _finalRoundCount = _roundCount;
+        FireAttacks.Instance.KillSprite();
     }
 }
