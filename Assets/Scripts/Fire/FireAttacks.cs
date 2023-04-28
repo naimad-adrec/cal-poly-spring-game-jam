@@ -26,7 +26,7 @@ public class FireAttacks : MonoBehaviour
     // Attack Cooldown Variables
     [SerializeField] private const double SPLASH_ATTACK_COOLDOWN = 1.5;
     [SerializeField] private const double HAND_ATTACK_COOLDOWN = 3.0;
-    [SerializeField] private int FIREBALL_ATTACK_COOLDOWN = 10;
+    [SerializeField] private int FIREBALL_ATTACK_COOLDOWN = 6;
     [SerializeField] private const double RAPID_FIRE_ATTACK_COOLDOWN = 0.2;
 
     // Attack Cooldwon Getters and Setters
@@ -84,10 +84,9 @@ public class FireAttacks : MonoBehaviour
         Instance = this;
 
         _fireballAttack = 10;
-        _rapidFireAttack = 5;
+        _rapidFireAttack = 1;
         _splashAttack = 50;
-        _handAttack = 50;
-
+        _handAttack = 25;
     }
 
     private void Start()
@@ -107,14 +106,11 @@ public class FireAttacks : MonoBehaviour
         SplashAttackEnemyInRange = splashAttackEnemyHitZone.IsTouchingLayers(enemyLayer.value);
         HandAttackEnemyInRangeLeft = handAttackEnemyHitZoneLeft.IsTouchingLayers(enemyLayer.value);
         HandAttackEnemyInRangeRight = handAttackEnemyHitZoneRight.IsTouchingLayers(enemyLayer.value);
-        EnemiesExist = GameObject.FindGameObjectWithTag("Enemy") != null;
+        EnemiesExist = GameObject.FindGameObjectWithTag("Enemy") != null ||
+            GameObject.FindGameObjectWithTag("Enemy Left") != null;
 
         if (canAttack == true)
         {
-            SplashAttackEnemyInRange = splashAttackEnemyHitZone.IsTouchingLayers(enemyLayer.value);
-            HandAttackEnemyInRangeLeft = handAttackEnemyHitZoneLeft.IsTouchingLayers(enemyLayer.value);
-            HandAttackEnemyInRangeRight = handAttackEnemyHitZoneRight.IsTouchingLayers(enemyLayer.value);
-            EnemiesExist = GameObject.FindGameObjectWithTag("Enemy") != null;
 
             if (FireController.Instance.CanUseSplashAttack() && SplashAttackEnemyInRange &&
                 Time.timeAsDouble >= LastSplashAttackTime + SPLASH_ATTACK_COOLDOWN)
@@ -318,9 +314,14 @@ public class FireAttacks : MonoBehaviour
         {
             enemy.GetComponent<EnemyLogic>().TakeDamage(1000);
         }
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy Left"))
+        {
+            enemy.GetComponent<EnemyLogic>().TakeDamage(1000);
+        }
 
         // Restore fire
         IsPerformingFireBurst = false;
+        canAttack = true;
         Sprite.enabled = true;
         audioSource.Play();
     }
@@ -328,5 +329,11 @@ public class FireAttacks : MonoBehaviour
     public void DisableAttack()
     {
         canAttack = false;
+    }
+
+    public void KillSprite()
+    {
+        Sprite.enabled = false;
+        audioSource.Stop();
     }
 }

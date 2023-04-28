@@ -7,26 +7,31 @@ public class TreeSpawnPoint : MonoBehaviour
     // Tree Variables
     [SerializeField] private GameObject tree;
     private float roundMax;
-    private bool isPlanted = true;
+    private bool isPlanted = false;
 
     private void Start()
     {
-        Instantiate(tree, transform.position, transform.rotation);
+        SpawnTree();
     }
+
     private void Update()
     {
         if (transform.childCount == 0)
         {
             isPlanted = false;
         }
+        else
+        {
+            isPlanted = true;
+        }
     }
 
     public void SpawnTree()
     {
-        if (isPlanted == false)
+        if (!isPlanted)
         {
-            Instantiate(tree, transform.position, transform.rotation);
-            isPlanted = true;
+            GameObject newTree = Instantiate(tree, transform, false);
+            newTree.transform.position = transform.position;
         }
     }
 }

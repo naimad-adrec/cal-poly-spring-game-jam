@@ -30,6 +30,7 @@ public class EnemyLogic : MonoBehaviour
 
     // Health Variables
     private int _health = 100;
+    private bool _isDead = false;
 
     // Health Getters and Setters
     public int Health { get { return _health; } set { _health = value; } }
@@ -49,6 +50,9 @@ public class EnemyLogic : MonoBehaviour
         {
             targetPosition = RightTargetBehavior.Instance.transform.position;
         }
+
+        int roundCount = RoundController.Instance.RoundCount;
+        Health = roundCount * roundCount * 3 + 30;
     }
 
     private void Update()
@@ -123,10 +127,12 @@ public class EnemyLogic : MonoBehaviour
 
     private void Die()
     {
-        // Play death Animation
+        if (_isDead) return;
+        _isDead = true;
         RoundController.Instance.LiveEnemies--;
+        // Play death Animation
 
-        if (Random.Range(0.0f, 1.0f) > 0.5f)
+        if (Random.Range(0, 2) == 0)
         {
             Instantiate(coalPrefab, transform.position, transform.rotation);
         }
@@ -140,5 +146,17 @@ public class EnemyLogic : MonoBehaviour
         _anim.SetBool("canAttack", true);
         yield return new WaitForSeconds(.5f);
         _anim.SetBool("canAttack", false);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Attack Range"))
+        {
+            _atTarget = true;
+        }
+        else
+        {
+            _atTarget = false;
+        }
     }
 }

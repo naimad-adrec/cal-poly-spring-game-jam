@@ -14,6 +14,7 @@ public class FireHealthUI : MonoBehaviour
 
     private void Update()
     {
+        fireHealthSlider.maxValue = FireController.Instance.MaxFireHealth;
         fireHealthSlider.value = FireController.Instance.FireHealth;
     }
 }

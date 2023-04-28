@@ -20,6 +20,7 @@ public class FireController : MonoBehaviour
     private bool _isBurning = true;
 
     // Health Getters and Setters
+    public int MaxFireHealth { get { return _maxFireHealth; } set { _maxFireHealth = value; } }
     public int FireHealth { get { return _fireHealth; } set { _fireHealth = value; } }
     public bool IsBurning { get { return _isBurning; } set { _isBurning = value; } }
 
@@ -30,6 +31,8 @@ public class FireController : MonoBehaviour
     private Upgrades upgrades;
     private int woodValue = 20;
     private bool _dropRateIncreased = false;
+
+    public Upgrades Upgrades { get { return upgrades; } set { upgrades = value; } }
 
     // Upgrade Getters and Setters
     public bool DropRateIncreased { get { return _dropRateIncreased; }  private set { } }
@@ -47,14 +50,7 @@ public class FireController : MonoBehaviour
 
     private void Update()
     {
-        if (_isBurning == true)
-        {
 
-        }
-        else
-        {
-
-        }
     }
 
     public void TakeResources()
@@ -65,7 +61,7 @@ public class FireController : MonoBehaviour
         {
             PlayerStateMachine.Instance.IsInteracting = false;
             PlayerStateMachine.Instance.WoodCount--;
-            _fireHealth += woodValue;
+            _fireHealth = Mathf.Min(_fireHealth + woodValue, _maxFireHealth);
 
             // Play flame noise
             PlayerAudioController audioController = PlayerStateMachine.Instance
@@ -93,7 +89,17 @@ public class FireController : MonoBehaviour
         {
             if (_fireHealth <= 0)
             {
-                FireDies();
+
+                if (CanUseFireFlash() == false)
+                {
+                    FireDies();
+                }
+                else
+                {
+                    _fireHealth = _maxFireHealth;
+                    FireAttacks.Instance.StartCoroutine(FireAttacks.Instance.PerformFireBurst());
+                    upgrades.RemoveUpgrade(Upgrades.UpgradeType.fireburst);
+                }
             }
             else
             {
@@ -115,6 +121,7 @@ public class FireController : MonoBehaviour
     public void SetMaxHealth(int healthIncrease)
     {
         _maxFireHealth = _maxFireHealth + healthIncrease;
+        _fireHealth += healthIncrease;
     }
 
     public void SetWoodValue(int valueIncrease)
@@ -141,6 +148,11 @@ public class FireController : MonoBehaviour
     public bool CanUseRapidAttack()
     {
         return upgrades.IsUpgradeUnlocked(Upgrades.UpgradeType.rapidAttack);
+    }
+
+    public bool CanUseFireFlash()
+    {
+        return upgrades.IsUpgradeUnlocked(Upgrades.UpgradeType.fireburst);
     }
 
     public void DropRateIncrease()
